@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductShopMVC", "ProductShopMVC\ProductShopMVC.csproj", "{5ED677C9-8158-4B98-9B02-72238B576252}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductShopMVC.Services", "ProductShopMVC.Services\ProductShopMVC.Services.csproj", "{B20E91B5-0B5A-468C-B758-3CA58A5F0596}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductShop(empty)", "ProductShop(empty)\ProductShop(empty).csproj", "{F68EF11F-E088-4E2B-8C69-BA021432BF1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5ED677C9-8158-4B98-9B02-72238B576252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5ED677C9-8158-4B98-9B02-72238B576252}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5ED677C9-8158-4B98-9B02-72238B576252}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5ED677C9-8158-4B98-9B02-72238B576252}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B20E91B5-0B5A-468C-B758-3CA58A5F0596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B20E91B5-0B5A-468C-B758-3CA58A5F0596}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B20E91B5-0B5A-468C-B758-3CA58A5F0596}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B20E91B5-0B5A-468C-B758-3CA58A5F0596}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F68EF11F-E088-4E2B-8C69-BA021432BF1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F68EF11F-E088-4E2B-8C69-BA021432BF1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F68EF11F-E088-4E2B-8C69-BA021432BF1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F68EF11F-E088-4E2B-8C69-BA021432BF1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
