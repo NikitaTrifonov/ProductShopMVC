@@ -16,7 +16,7 @@ namespace ProductShop_empty_
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "product", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "product", action = "Home", id = UrlParameter.Optional }
             );
         }
     }
