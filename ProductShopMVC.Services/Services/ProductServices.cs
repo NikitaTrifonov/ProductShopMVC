@@ -10,6 +10,7 @@ namespace ProductShopMVC.Services.Services
 {
     public class ProductServices
     {
+      
         public Product GetProductById( int id)
         {
             return ProductRepository.GetProductById(id);
