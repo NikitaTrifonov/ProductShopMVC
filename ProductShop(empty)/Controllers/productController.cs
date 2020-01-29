@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ProductShopMVC.Services.Services;
+using ProductShopMVC.Services.Models;
 
 namespace ProductShop_empty_.Controllers
 {
@@ -14,6 +15,13 @@ namespace ProductShop_empty_.Controllers
         public ActionResult Home()
         {
             return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetAllProducts()
+        {
+            List<Product> products = productServices.GetAllProducts();
+            return Json(products, JsonRequestBehavior.AllowGet);
         }
     }
 }
