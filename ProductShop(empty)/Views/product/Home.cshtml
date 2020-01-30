@@ -2,35 +2,33 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<div>
+    <h1>Список товаров</h1>
+    <table border="1" id="productsTable">
+        <tr>
+            <th>Id товара</th>
+            <th>Название</th>
+            <th>Цена</th>
+        </tr>
+    </table>
 
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
+</div>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+    $(document).ready(function () {
+        $.getJSON("GetAllProducts",
+            function (json) {
+                var tr;
+                for (var i = 0; i < json.length; i++) {
+                    tr = $('<tr/>');
+                    tr.append("<td>" + json[i].ProductId + "</td>");
+                    tr.append("<td>" + json[i].ProductName + "</td>");
+                    tr.append("<td>" + json[i].ProductPrice + "</td>");
+                    $('#productsTable').append(tr);
+                }
+            });
+    });
+</script>
 
-</head>
-<body>
-    <div>
-        <h1>Список товаров</h1>
-        <table border="1">
-            <tr>
-                <th>Id товара</th>
-                <th>Название</th>
-                <th>Цена</th>
-            </tr>
-            <tr>
-                <td>Нет данных</td>
-                <td>Нет данных</td>
-                <td>Нет данных</td>
-            </tr>
-        </table>
-        <div>
-            @Html.Partial("GetAllProducts")
-        </div>
-    </div>  
 
-</body>
 
-</html>
