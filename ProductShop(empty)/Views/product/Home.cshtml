@@ -4,6 +4,9 @@
 
 <div>
     <h1>Список товаров</h1>
+    <div>
+        <input type="button" id="getAllProducts" value="Загрузить данные" />
+    </div>
     <table border="1" id="productsTable">
         <tr>
             <th>Id товара</th>
@@ -11,24 +14,14 @@
             <th>Цена</th>
         </tr>
     </table>
-
+    <div>
+        <label>Имя товара: <input type="text" id="requiredProductName" /></label>
+        <input type="button" id="getProductByName" value="Поиск" />
+    </div>
 </div>
 <script src="~/Scripts/jquery-3.4.1.js"></script>
-<script>
-    $(document).ready(function () {
-        $.getJSON("GetAllProducts",
-            function (json) {
-                var tr;
-                for (var i = 0; i < json.length; i++) {
-                    tr = $('<tr/>');
-                    tr.append("<td>" + json[i].ProductId + "</td>");
-                    tr.append("<td>" + json[i].ProductName + "</td>");
-                    tr.append("<td>" + json[i].ProductPrice + "</td>");
-                    $('#productsTable').append(tr);
-                }
-            });
-    });
-</script>
+<script src="~/Scripts/productScripts/getAllProducts.js"></script>
+<script src="~/Scripts/productScripts/getProductByName.js"></script>
 
 
 

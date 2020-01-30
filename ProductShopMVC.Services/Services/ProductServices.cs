@@ -10,10 +10,15 @@ namespace ProductShopMVC.Services.Services
 {
     public class ProductServices
     {
-      
-        public Product GetProductById( int id)
+
+        public Product GetProductById(int id)
         {
             return ProductRepository.GetProductById(id);
+        }
+
+        public Product GetProductByName(string name)
+        {
+            return ProductRepository.GetProductByName(name);
         }
 
         public List<Product> GetAllProducts()

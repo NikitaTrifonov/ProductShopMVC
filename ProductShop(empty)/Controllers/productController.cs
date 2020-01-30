@@ -23,5 +23,11 @@ namespace ProductShop_empty_.Controllers
             List<Product> products = productServices.GetAllProducts();
             return Json(products, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult GetProductByName(string name)
+        {
+            Product requiredProduct = productServices.GetProductByName(name);
+            return Json(requiredProduct, JsonRequestBehavior.AllowGet); 
+        }
     }
 }

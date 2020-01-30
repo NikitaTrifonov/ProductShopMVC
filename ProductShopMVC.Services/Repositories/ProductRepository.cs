@@ -15,6 +15,10 @@ namespace ProductShopMVC.Services.Repositories
         {
             return ProductsList.FirstOrDefault(product => product.ProductId == id);
         }
+        public static Product GetProductByName(string name)
+        {
+            return ProductsList.FirstOrDefault(product => product.ProductName == name);
+        }
 
         public static List<Product> GetAllProducts()
         {
