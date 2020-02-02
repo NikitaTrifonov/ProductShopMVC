@@ -16,9 +16,9 @@ namespace ProductShopMVC.Services.Services
             return ProductRepository.GetProductById(id);
         }
 
-        public Product GetProductByName(string name)
+        public List<Product> GetProductsByName(string name)
         {
-            return ProductRepository.GetProductByName(name);
+            return ProductRepository.GetProductsByName(name);
         }
 
         public List<Product> GetAllProducts()

@@ -5,7 +5,8 @@
 <div>
     <h1>Список товаров</h1>
     <div>
-        <input type="button" id="getAllProducts" value="Загрузить данные" />
+        <label>Имя товара: <input type="text" id="requiredProductName" /></label>
+        <input type="button" id="getProductByName" value="Поиск" />
     </div>
     <table border="1" id="productsTable">
         <tr>
@@ -14,14 +15,9 @@
             <th>Цена</th>
         </tr>
     </table>
-    <div>
-        <label>Имя товара: <input type="text" id="requiredProductName" /></label>
-        <input type="button" id="getProductByName" value="Поиск" />
-    </div>
 </div>
-<script src="~/Scripts/jquery-3.4.1.js"></script>
-<script src="~/Scripts/productScripts/getAllProducts.js"></script>
-<script src="~/Scripts/productScripts/getProductByName.js"></script>
+<script src="~/Scripts/productScripts/ProductList.js"></script>
+
 
 
 
