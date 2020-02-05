@@ -18,6 +18,7 @@ function addContentInTable(data) {
         tr.append("<td>" + data[i].ProductId + "</td>");
         tr.append("<td>" + data[i].ProductName + "</td>");
         tr.append("<td>" + data[i].ProductPrice + "</td>");
+        tr.append("<td><a href ='EditProduct?id=" + data[i].ProductId + "'>Редактировать</a >" + "</td > ");
         $('#productsTable').append(tr);
     }
 }

@@ -11,7 +11,14 @@ namespace ProductShop_empty_.Controllers
     public class ProductController : Controller
     {
         private ProductServices productServices = new ProductServices();
-        // GET: product
+       
+
+
+        public ActionResult EditProduct(int id)
+        {
+            var product = productServices.GetProductById(id);
+            return View(product);
+        }
         public ActionResult Home()
         {
             return View();
