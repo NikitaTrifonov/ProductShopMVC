@@ -1,10 +1,10 @@
 ﻿$(document).ready(function () {
-    $.getJSON("Product/GetAllProducts", addContentInTable);
+    $.getJSON("GetAllProducts", addContentInTable);
 })
 
 
 $('#getProductByName').click(function () {
-    $.getJSON("Product/GetProductByName", { Name: $('#requiredProductName').val() }, addContentInTable)
+    $.getJSON("GetProductByName", { Name: $('#requiredProductName').val() }, addContentInTable)
 })
 
 function addContentInTable(data) {
