@@ -1,17 +1,22 @@
-﻿
+﻿@model ProductShopMVC.Services.Models.Product
+@using Newtonsoft.Json
 @{
-   Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Добавление продуктов";
 }
 
-<!DOCTYPE html>
+@section scripts{
+    <script>
+        var product = @Html.Raw(JsonConvert.SerializeObject(Model));
+    </script>
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>EditProduct</title>
-</head>
-<body>
-    <div> 
-    </div>
-</body>
-</html>
+<h2>@ViewBag.Title</h2>
+<div>
+    <p><input id="editId" /> Id</p>
+    <p><input id="editName" /> Название</p>
+    <p><input id="editPrice" /> Цена</p>
+</div>
+<div>
+    <input type="button" id="editBtOk" value="Ok" />
+</div>
+<script src="~/Scripts/ProductScripts/EditProduct.js"></script>

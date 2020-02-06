@@ -1,12 +1,11 @@
 ﻿@using System.Web.Optimization
-<script src="~/Scripts/jquery-3.4.1.js"></script>
-
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="shortcut icon" href="#" />
     <meta charset="utf-8" />
     <title>ProductShop</title>
-
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
 
 </head>
 
@@ -15,8 +14,7 @@
         <h1> ProductShop</h1>
     </nav>
     @RenderBody()
-
-
+    @RenderSection("scripts", false)
 </body>
 
 </html>

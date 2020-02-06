@@ -13,7 +13,7 @@ namespace ProductShop_empty_.Controllers
         private ProductServices productServices = new ProductServices();
        
 
-
+        [HttpGet]
         public ActionResult EditProduct(int id)
         {
             var product = productServices.GetProductById(id);
