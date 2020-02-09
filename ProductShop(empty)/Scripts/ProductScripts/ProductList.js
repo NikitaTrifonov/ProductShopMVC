@@ -2,7 +2,6 @@
     $.getJSON("GetAllProducts", addContentInTable);
 })
 
-
 $('#getProductByName').click(function () {
     $.getJSON("GetProductByName", { Name: $('#requiredProductName').val() }, addContentInTable)
 })
@@ -18,7 +17,7 @@ function addContentInTable(data) {
         tr.append("<td>" + data[i].ProductId + "</td>");
         tr.append("<td>" + data[i].ProductName + "</td>");
         tr.append("<td>" + data[i].ProductPrice + "</td>");
-        tr.append("<td><a href ='EditProduct?id=" + data[i].ProductId + "'>Редактировать</a >" + "</td > ");
+        tr.append("<td><a href ='EditProductView?id=" + data[i].ProductId + "'>Редактировать</a >" + "</td > ");
         $('#productsTable').append(tr);
     }
 }

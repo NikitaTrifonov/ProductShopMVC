@@ -25,5 +25,9 @@ namespace ProductShopMVC.Services.Services
         {
             return ProductRepository.GetAllProducts();
         }
+         public void EditProduct(Product product)
+        {
+            ProductRepository.EditProduct(product);
+        }
     }
 }

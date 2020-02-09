@@ -1,0 +1,24 @@
+﻿@model ProductShopMVC.Services.Models.Product
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = Model == null? "Добавление продукта" : "Редактирование продукта";
+}
+
+@section scripts{
+    <script>
+        var product = @Html.Raw(JsonConvert.SerializeObject(Model));
+    </script>
+}
+
+<h2>@ViewBag.Title</h2>
+<div>
+    <p><input id="inputId" disabled /> Id </p>
+    <p><input id="inputName" /> Название</p>
+    <p><input id="inputPrice" /> Цена</p>
+</div>
+<div>
+    <input type="button" id="AddEditBtn" value="Изменить" />
+    <p id="succsesMessage"></p>
+</div>
+
+<script src="~/Scripts/ProductScripts/AddEditProduct.js"></script>

@@ -29,5 +29,11 @@ namespace ProductShopMVC.Services.Repositories
         {
             return ProductsList;
         }
+
+        public static void EditProduct(Product changedProduct)
+        {
+            ProductsList.RemoveAt(changedProduct.ProductId - 1);
+            ProductsList.Insert(changedProduct.ProductId - 1, changedProduct);
+        }
     }
 }
