@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ProductShopMVC.Services.Services;
 using ProductShopMVC.Services.Models;
-using ProductShop_empty_.Models;
+
 
 namespace ProductShop_empty_.Controllers
 {
@@ -26,8 +26,8 @@ namespace ProductShop_empty_.Controllers
             var product = productServices.GetProductById(id);
             return View("~/Views/Product/AddEditProduct.cshtml",product);
         }
-        [HttpPost]
-        public string EditProduct(Prod prod)
+        [HttpPost] 
+        public string EditProduct(AddEditProductModel product)
         {
             
             return "ok";

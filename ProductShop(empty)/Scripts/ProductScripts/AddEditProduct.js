@@ -23,7 +23,8 @@
             $.ajax({
                 type: "POST",
                 url: "/Product/EditProduct",
-                data: {prod: prod}
+                data: prod
+                
             });
         });
     }
