@@ -27,10 +27,9 @@ namespace ProductShop_empty_.Controllers
             return View("~/Views/Product/AddEditProduct.cshtml",product);
         }
         [HttpPost] 
-        public string EditProduct(AddEditProductModel product)
+        public void EditProduct(AddEditProductModel product)
         {
-            
-            return "ok";
+            productServices.EditProduct(product);         
             
         }
 

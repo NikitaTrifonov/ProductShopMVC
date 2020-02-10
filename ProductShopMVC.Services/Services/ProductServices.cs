@@ -25,9 +25,15 @@ namespace ProductShopMVC.Services.Services
         {
             return ProductRepository.GetAllProducts();
         }
-         public void EditProduct(Product product)
+        public void EditProduct(AddEditProductModel productFromView)
         {
-            ProductRepository.EditProduct(product);
+            if (productFromView != null)
+            {
+                Product changedProduct = ProductRepository.GetProductById(productFromView.ProductId);
+                changedProduct.ProductName = productFromView?.ProductName;
+                changedProduct.ProductPrice = productFromView?.ProductPrice;
+                ProductRepository.EditProduct(changedProduct);
+            }
         }
     }
 }

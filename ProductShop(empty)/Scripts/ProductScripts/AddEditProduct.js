@@ -19,13 +19,14 @@
                 ProductName: $("#inputName").val(),
                 ProductPrice: $("#inputPrice").val()
             }
+            $.post("EditProduct", prod, succsesFunction);
 
-            $.ajax({
-                type: "POST",
-                url: "/Product/EditProduct",
-                data: prod
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Product/EditProduct",
+            //    data: prod
                 
-            });
+            //});
         });
     }
    
@@ -35,5 +36,5 @@ $(function () {
 });
 
 function succsesFunction() {
-    $("#succsesMessage").val("Продукт изменен");
+    $("#succsesMessage").text("Успешно!");
 }
