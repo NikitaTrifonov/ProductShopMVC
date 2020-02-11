@@ -1,7 +1,7 @@
 ﻿@model ProductShopMVC.Services.Models.Product
 @using Newtonsoft.Json
 @{
-    ViewBag.Title = Model == null? "Добавление продукта" : "Редактирование продукта";
+    ViewBag.Title = Model == null ? "Добавление продукта" : "Редактирование продукта";
 }
 
 @section scripts{
@@ -13,12 +13,12 @@
 <h2>@ViewBag.Title</h2>
 <div>
     <p><input id="inputId" disabled /> Id </p>
-    <p><input id="inputName" /> Название</p>
-    <p><input id="inputPrice" /> Цена</p>
+    <p><input id="inputName" onkeyup="checkParams()" /> Название </p>
+    <p><input id="inputPrice" type="number" min="0" step="0.01" placeholder="0.00" onkeyup="checkParams()" oninput="limitDecimal(this)" /> Цена</p>
 </div>
 <div>
-    <input type="button" id="AddEditBtn" value="Изменить" />
+    <input type="button" id="submitButton" value="Изменить" />
+    <p id="checkMessage"></p>
     <p id="succsesMessage"></p>
 </div>
-
 <script src="~/Scripts/ProductScripts/AddEditProduct.js"></script>
