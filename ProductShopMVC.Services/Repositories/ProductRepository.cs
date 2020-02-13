@@ -10,12 +10,12 @@ namespace ProductShopMVC.Services.Repositories
     public static class ProductRepository
     {
         private static List<Product> ProductsList = new List<Product> {
-            new Product(1, "Orange", "15.00"),
-            new Product(2, "Lime", "30.00"),
-            new Product(3, "Apple", "8.30"),
-            new Product(4, "Lime", "40.00")};
+            new Product(Guid.NewGuid().ToString(), "Orange", "15.00"),
+            new Product(Guid.NewGuid().ToString(), "Lime", "30.00"),
+            new Product(Guid.NewGuid().ToString(), "Apple", "8.30"),
+            new Product(Guid.NewGuid().ToString(), "Lime", "40.00")};
 
-        public static Product GetProductById(int id)
+        public static Product GetProductById(string id)
         {
             return ProductsList.FirstOrDefault(product => product.ProductId == id);
         }
@@ -32,8 +32,10 @@ namespace ProductShopMVC.Services.Repositories
 
         public static void EditProduct(Product changedProduct)
         {
-            ProductsList.RemoveAt(changedProduct.ProductId - 1);
-            ProductsList.Insert(changedProduct.ProductId - 1, changedProduct);
+            Product oldProduct = ProductRepository.GetProductById(changedProduct.ProductId);
+            int indexProduct = ProductsList.IndexOf(oldProduct);
+            ProductsList.Remove(oldProduct);
+            ProductsList.Insert(indexProduct, changedProduct);
         }
     }
 }

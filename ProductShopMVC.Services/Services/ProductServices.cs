@@ -11,7 +11,7 @@ namespace ProductShopMVC.Services.Services
     public class ProductServices
     {
 
-        public Product GetProductById(int id)
+        public Product GetProductById(string id)
         {
             return ProductRepository.GetProductById(id);
         }

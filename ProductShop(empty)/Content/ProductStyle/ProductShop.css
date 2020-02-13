@@ -1,4 +1,5 @@
-﻿.successMessage {
+﻿/*Цвета сообщений на странице редактирования и добавления товара*/
+.successMessage {
     color: green;
     font-size: 18px;
 }
@@ -6,4 +7,13 @@
 .errorMessage {
     color: red;
     font-size: 18px;
+}
+/*Стиль кнопки "Добавтиь" на страницы товаров*/
+.btnAdd {
+    display: inline-block;
+    background: #8C959D;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    border-radius: 3px;
 }

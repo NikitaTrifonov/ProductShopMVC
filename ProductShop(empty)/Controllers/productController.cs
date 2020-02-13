@@ -21,7 +21,7 @@ namespace ProductShop_empty_.Controllers
 
 
         [HttpGet]
-        public ActionResult EditProductView(int id)
+        public ActionResult EditProductView(string id)
         {
             var product = productServices.GetProductById(id);
             return View("~/Views/Product/AddEditProduct.cshtml",product);
