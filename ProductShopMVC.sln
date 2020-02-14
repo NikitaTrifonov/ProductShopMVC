@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductShopMVC.Services", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductShop(empty)", "ProductShop(empty)\ProductShop(empty).csproj", "{F68EF11F-E088-4E2B-8C69-BA021432BF1D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductShopMVC.Tools", "ProductShopMVC.Tools\ProductShopMVC.Tools.csproj", "{34F76987-2AC7-450B-A831-762E5ED2FC92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F68EF11F-E088-4E2B-8C69-BA021432BF1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F68EF11F-E088-4E2B-8C69-BA021432BF1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F68EF11F-E088-4E2B-8C69-BA021432BF1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34F76987-2AC7-450B-A831-762E5ED2FC92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34F76987-2AC7-450B-A831-762E5ED2FC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34F76987-2AC7-450B-A831-762E5ED2FC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34F76987-2AC7-450B-A831-762E5ED2FC92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

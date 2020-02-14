@@ -5,14 +5,14 @@ using System.Web;
 using System.Web.Mvc;
 using ProductShopMVC.Services.Services;
 using ProductShopMVC.Services.Models;
-
+using ProductShopMVC.Tools.Response;
 
 namespace ProductShop_empty_.Controllers
 {
     public class ProductController : Controller
     {
         private ProductServices productServices = new ProductServices();
-       
+
         [HttpGet]
         public ActionResult AddProductView()
         {
@@ -24,13 +24,13 @@ namespace ProductShop_empty_.Controllers
         public ActionResult EditProductView(string id)
         {
             var product = productServices.GetProductById(id);
-            return View("~/Views/Product/AddEditProduct.cshtml",product);
+            return View("~/Views/Product/AddEditProduct.cshtml", product);
         }
-        [HttpPost] 
+        [HttpPost]
         public void EditProduct(AddEditProductModel product)
         {
-            productServices.EditProduct(product);         
-            
+            productServices.EditProduct(product);
+
         }
 
         public ActionResult Home()
@@ -51,8 +51,8 @@ namespace ProductShop_empty_.Controllers
         public JsonResult GetProductByName(string name)
         {
             List<Product> requiredProduct = productServices.GetProductsByName(name);
-            return Json(requiredProduct, JsonRequestBehavior.AllowGet); 
+            return Json(requiredProduct, JsonRequestBehavior.AllowGet);
         }
     }
-    
+
 }

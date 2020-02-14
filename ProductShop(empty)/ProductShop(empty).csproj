@@ -184,6 +184,10 @@
       <Project>{b20e91b5-0b5a-468c-b758-3ca58a5f0596}</Project>
       <Name>ProductShopMVC.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ProductShopMVC.Tools\ProductShopMVC.Tools.csproj">
+      <Project>{34f76987-2ac7-450b-a831-762e5ed2fc92}</Project>
+      <Name>ProductShopMVC.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

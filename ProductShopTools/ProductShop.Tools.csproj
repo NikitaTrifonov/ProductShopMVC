@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B20E91B5-0B5A-468C-B758-3CA58A5F0596}</ProjectGuid>
+    <ProjectGuid>{00A30EED-C126-439D-8417-844759156A9C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ProductShopMVC.Services</RootNamespace>
-    <AssemblyName>ProductShopMVC.Services</AssemblyName>
+    <RootNamespace>ProductShopTools</RootNamespace>
+    <AssemblyName>ProductShopTools</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,20 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\AddEditProductModel.cs" />
-    <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\ProductRepository.cs" />
-    <Compile Include="Services\ProductServices.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ProductShopMVC.Tools\ProductShopMVC.Tools.csproj">
-      <Project>{34f76987-2ac7-450b-a831-762e5ed2fc92}</Project>
-      <Name>ProductShopMVC.Tools</Name>
-    </ProjectReference>
+    <Compile Include="ResponseGenerator\ResponseGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
