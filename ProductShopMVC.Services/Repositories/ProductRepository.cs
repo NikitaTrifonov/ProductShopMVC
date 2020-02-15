@@ -10,11 +10,13 @@ namespace ProductShopMVC.Services.Repositories
 {
     public static class ProductRepository
     {
-        private static List<Product> ProductsList = new List<Product> {
+        private static List<Product> ProductsList = new List<Product>
+        {
             new Product(Guid.NewGuid().ToString(), "Orange", "15.00"),
             new Product(Guid.NewGuid().ToString(), "Lime", "30.00"),
             new Product(Guid.NewGuid().ToString(), "Apple", "8.30"),
-            new Product(Guid.NewGuid().ToString(), "Lime", "40.00")};
+            new Product(Guid.NewGuid().ToString(), "Lime", "40.00")
+        };
 
         public static Product GetProductById(string id)
         {

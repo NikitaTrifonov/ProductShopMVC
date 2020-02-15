@@ -14,20 +14,36 @@ namespace ProductShopMVC.Services.Services
     public class ProductServices
     {
 
+
         public Product GetProductById(string id)
         {
             return ProductRepository.GetProductById(id);
         }
 
-        public List<Product> GetProductsByName(string name)
+        public List<Product> GetProductsByName(string name, out DefaultError outError)
         {
+            outError = new DefaultError();
+            if (name == null)
+            {
+                outError.errorMessage = "Ошибка ввода названия. Пустое значение!";
+            }
+            else if (ProductRepository.GetProductsByName(name) == null || !ProductRepository.GetProductsByName(name).Any())
+            {
+                outError.errorMessage = "Продукт с данным название отсутствует!";
+            }
             return ProductRepository.GetProductsByName(name);
         }
 
-        public List<Product> GetAllProducts()
+        public List<Product> GetAllProducts(out DefaultError outError)
         {
+            outError = new DefaultError();
+            if (ProductRepository.GetAllProducts() == null || !ProductRepository.GetAllProducts().Any())
+            {
+                outError.errorMessage = "Список продуктов пуст!!!";
+            }
             return ProductRepository.GetAllProducts();
         }
+
         public void EditProduct(AddEditProductModel productFromView)
         {
             if (productFromView != null)

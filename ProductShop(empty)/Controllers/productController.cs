@@ -40,18 +40,18 @@ namespace ProductShop_empty_.Controllers
 
 
         [HttpGet]
-        public JsonResult GetAllProducts()
-        {
-            List<Product> products = productServices.GetAllProducts();
-            return Json(products, JsonRequestBehavior.AllowGet);
+        public JsonResult GetAllProducts()        
+        {           
+            Result<List<Product>> result = new Result<List<Product>>(productServices.GetAllProducts(out DefaultError outError), outError.errorMessage);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
 
         [HttpGet]
         public JsonResult GetProductByName(string name)
         {
-            List<Product> requiredProduct = productServices.GetProductsByName(name);
-            return Json(requiredProduct, JsonRequestBehavior.AllowGet);
+            Result<List<Product>> result = new Result<List<Product>>(productServices.GetProductsByName(name, out DefaultError outError), outError.errorMessage);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 
