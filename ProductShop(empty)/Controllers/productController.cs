@@ -13,6 +13,7 @@ namespace ProductShop_empty_.Controllers
     {
         private ProductServices productServices = new ProductServices();
 
+
         [HttpGet]
         public ActionResult AddProductView()
         {
@@ -26,12 +27,16 @@ namespace ProductShop_empty_.Controllers
             var product = productServices.GetProductById(id);
             return View("~/Views/Product/AddEditProduct.cshtml", product);
         }
-        [HttpPost]
-        public void EditProduct(AddEditProductModel product)
-        {
-            productServices.EditProduct(product);
 
+
+        [HttpPost]
+        public JsonResult EditProduct(AddEditProductModel product)
+        {
+            productServices.EditProduct(product, out DefaultError outError);
+            ResultHandler<Object> result = new ResultHandler<object>(outError.errorMessage);
+            return Json(result, JsonRequestBehavior.AllowGet);            
         }
+
 
         public ActionResult Home()
         {
@@ -40,9 +45,9 @@ namespace ProductShop_empty_.Controllers
 
 
         [HttpGet]
-        public JsonResult GetAllProducts()        
-        {           
-            Result<List<Product>> result = new Result<List<Product>>(productServices.GetAllProducts(out DefaultError outError), outError.errorMessage);
+        public JsonResult GetAllProducts()
+        {
+            ResultHandler<List<Product>> result = new ResultHandler<List<Product>>(productServices.GetAllProducts(out DefaultError outError), outError.errorMessage);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -50,7 +55,7 @@ namespace ProductShop_empty_.Controllers
         [HttpGet]
         public JsonResult GetProductByName(string name)
         {
-            Result<List<Product>> result = new Result<List<Product>>(productServices.GetProductsByName(name, out DefaultError outError), outError.errorMessage);
+            ResultHandler<List<Product>> result = new ResultHandler<List<Product>>(productServices.GetProductsByName(name, out DefaultError outError), outError.errorMessage);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }

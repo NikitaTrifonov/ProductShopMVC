@@ -6,20 +6,24 @@ using System.Threading.Tasks;
 
 namespace ProductShopMVC.Tools.Response
 {
-    public class Result<T>
+    public class ResultHandler<T>
     {
         public String Error { get; set; }
         public Boolean IsSuccess { get { return String.IsNullOrWhiteSpace(Error); } }
         public T Data { get; set; }
         
-        public Result(T data, String error = "")
+        public ResultHandler(T data, String error = "")
         {
             Data = data;
             Error = error;
         }
-        public Result()
+        public ResultHandler()
         {
 
+        }
+        public ResultHandler(String error = "")
+        {
+            Error = error;
         }
     }
 }

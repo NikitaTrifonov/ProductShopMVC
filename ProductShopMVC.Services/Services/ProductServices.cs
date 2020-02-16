@@ -13,8 +13,6 @@ namespace ProductShopMVC.Services.Services
 {
     public class ProductServices
     {
-
-
         public Product GetProductById(string id)
         {
             return ProductRepository.GetProductById(id);
@@ -44,15 +42,36 @@ namespace ProductShopMVC.Services.Services
             return ProductRepository.GetAllProducts();
         }
 
-        public void EditProduct(AddEditProductModel productFromView)
+        public void EditProduct(AddEditProductModel productFromView, out DefaultError outError)
         {
-            if (productFromView != null)
+            decimal price;
+            
+            outError = new DefaultError();
+            if (productFromView == null)
             {
-                Product changedProduct = ProductRepository.GetProductById(productFromView.ProductId);
-                changedProduct.ProductName = productFromView?.ProductName;
-                changedProduct.ProductPrice = productFromView?.ProductPrice;
-                ProductRepository.EditProduct(changedProduct);
+                outError.errorMessage = "Ошибка данных. Пустая фйорма с клиенита!";
             }
+            else if (ProductRepository.GetProductById(productFromView.ProductId) == null)
+            {
+                outError.errorMessage = "Продукт с таким Id отсутствует в базе!";
+            }
+            else if (String.IsNullOrEmpty(productFromView.ProductName))
+            {
+                outError.errorMessage = "Ошибка ввода данных. Пустое значение названия продукта!";
+            }
+            else if (String.IsNullOrEmpty(productFromView.ProductPrice))
+            {
+                outError.errorMessage = "Ошибка ввода данных. Пустое значение цены продукта!";
+            }
+            else if (Decimal.TryParse(productFromView.ProductPrice, out price))
+            {
+                outError.errorMessage = "Ошибка ввода данных. Значение цены продукта не  может быть меньше или равна нулю!";
+            }
+            Product changedproduct = ProductRepository.GetProductById(productFromView.ProductId);
+            changedproduct.ProductName = productFromView?.ProductName;
+            changedproduct.ProductPrice = productFromView?.ProductPrice;
+            ProductRepository.EditProduct(changedproduct);
         }
     }
 }
+

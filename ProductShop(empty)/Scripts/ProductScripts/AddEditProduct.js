@@ -12,16 +12,16 @@
 
         $("#submitButton").click(function () {
             product.ProductName = $("#inputName").val();
-            product.ProductPrice = $("#inputPrice").val();
-            if (!$.trim(product.ProductName)) {               
+            product.ProductPrice = Number.parseFloat($("#inputPrice").val()).toFixed(2);
+            if (!$.trim(product.ProductName)) {
                 getStatusMessage('failName');
             }
             else
-                if ($("#inputPrice").val() <= 0 || !$("#inputPrice").val()) {                    
+                if ($("#inputPrice").val() <= 0 || !$("#inputPrice").val()) {
                     getStatusMessage("failPrice");
                 }
                 else {
-                    $.post("EditProduct", product,  getStatusMessage('success'));
+                    $.post("EditProduct", product, IsSuccess);
                 }
         });
     }
@@ -31,26 +31,35 @@ $(function () {
     init()
 });
 
+function IsSuccess(RequestResault) {
+    if (RequestResault.IsSuccess) {
+        getStatusMessage('success')
+    }
+    else {
+        setErrorColorMessage();
+        $("#statusMessage").text(RequestResault.Error)
+    }
+}
 
 function setErrorColorMessage() {
-    $("#succsesMessage").removeAttr('class');
-    $("#succsesMessage").attr('class', 'errorMessage');
+    $("#statusMessage").removeAttr('class');
+    $("#statusMessage").attr('class', 'errorMessage');
 }
 
 function getStatusMessage(status) {
     switch (status) {
         case "success":
-            $("#succsesMessage").removeAttr('class');
-            $("#succsesMessage").attr('class', 'successMessage');
-            $("#succsesMessage").text("Успешно! Изменения сохранены!");
+            $("#statusMessage").removeAttr('class');
+            $("#statusMessage").attr('class', 'successMessage');
+            $("#statusMessage").text("Успешно! Изменения сохранены!");
             break;
         case "failName":
             setErrorColorMessage()
-            $("#succsesMessage").text("Некорректный ввод названия продукта! Название не может быть пустым. Изменения не сохранены!");
+            $("#statusMessage").text("Некорректный ввод названия продукта! Название не может быть пустым. Изменения не сохранены!");
             break;
         case "failPrice":
             setErrorColorMessage();
-            $("#succsesMessage").text("Некорректный ввод цены продукта! Цена не может быть меньше или равна нулю. Изменения не сохранены!");
+            $("#statusMessage").text("Некорректный ввод цены продукта! Цена не может быть меньше или равна нулю. Изменения не сохранены!");
             break;
     }
 }
@@ -65,6 +74,6 @@ function checkParams() {
 }
 function limitDecimal(e) {
     if (e.value.indexOf(".") != '-1') {
-        e.value = e.value.substring(0, e.value.indexOf(".") + 3);         
+        e.value = e.value.substring(0, e.value.indexOf(".") + 3);
     }
 }
