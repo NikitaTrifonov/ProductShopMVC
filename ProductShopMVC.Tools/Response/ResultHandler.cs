@@ -17,10 +17,7 @@ namespace ProductShopMVC.Tools.Response
             Data = data;
             Error = error;
         }
-        public ResultHandler()
-        {
-
-        }
+        public ResultHandler(){}
         public ResultHandler(String error = "")
         {
             Error = error;

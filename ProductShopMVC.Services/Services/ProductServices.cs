@@ -21,13 +21,17 @@ namespace ProductShopMVC.Services.Services
         public List<Product> GetProductsByName(string name, out DefaultError outError)
         {
             outError = new DefaultError();
+            List<Product> result = ProductRepository.GetProductsByName(name);
+
             if (name == null)
             {
                 outError.errorMessage = "Ошибка ввода названия. Пустое значение!";
+                return new List<Product>();
             }
-            else if (ProductRepository.GetProductsByName(name) == null || !ProductRepository.GetProductsByName(name).Any())
+            if (result == null || !result.Any())
             {
                 outError.errorMessage = "Продукт с данным название отсутствует!";
+                return new List<Product>();
             }
             return ProductRepository.GetProductsByName(name);
         }
@@ -35,39 +39,47 @@ namespace ProductShopMVC.Services.Services
         public List<Product> GetAllProducts(out DefaultError outError)
         {
             outError = new DefaultError();
-            if (ProductRepository.GetAllProducts() == null || !ProductRepository.GetAllProducts().Any())
+            List<Product> result = ProductRepository.GetAllProducts();
+
+            if (result == null || !result.Any())
             {
                 outError.errorMessage = "Список продуктов пуст!!!";
             }
-            return ProductRepository.GetAllProducts();
+            return result;
         }
 
         public void EditProduct(AddEditProductModel productFromView, out DefaultError outError)
         {
             decimal price;
-            
             outError = new DefaultError();
+
             if (productFromView == null)
             {
                 outError.errorMessage = "Ошибка данных. Пустая фйорма с клиенита!";
-            }
-            else if (ProductRepository.GetProductById(productFromView.ProductId) == null)
-            {
-                outError.errorMessage = "Продукт с таким Id отсутствует в базе!";
-            }
-            else if (String.IsNullOrEmpty(productFromView.ProductName))
-            {
-                outError.errorMessage = "Ошибка ввода данных. Пустое значение названия продукта!";
-            }
-            else if (String.IsNullOrEmpty(productFromView.ProductPrice))
-            {
-                outError.errorMessage = "Ошибка ввода данных. Пустое значение цены продукта!";
-            }
-            else if (Decimal.TryParse(productFromView.ProductPrice, out price))
-            {
-                outError.errorMessage = "Ошибка ввода данных. Значение цены продукта не  может быть меньше или равна нулю!";
+                return;
             }
             Product changedproduct = ProductRepository.GetProductById(productFromView.ProductId);
+
+            if (changedproduct == null)
+            {
+                outError.errorMessage = "Продукт с таким Id отсутствует в базе!";
+                return;
+            }
+            if (String.IsNullOrEmpty(productFromView.ProductName))
+            {
+                outError.errorMessage = "Ошибка ввода данных. Пустое значение названия продукта!";
+                return;
+            }
+            if (String.IsNullOrEmpty(productFromView.ProductPrice))
+            {
+                outError.errorMessage = "Ошибка ввода данных. Пустое значение цены продукта!";
+                return;
+            }
+            if (Decimal.TryParse(productFromView.ProductPrice, out price))
+            {
+                outError.errorMessage = "Ошибка ввода данных. Значение цены продукта не  может быть меньше или равна нулю!";
+                return;
+            }
             changedproduct.ProductName = productFromView?.ProductName;
             changedproduct.ProductPrice = productFromView?.ProductPrice;
             ProductRepository.EditProduct(changedproduct);

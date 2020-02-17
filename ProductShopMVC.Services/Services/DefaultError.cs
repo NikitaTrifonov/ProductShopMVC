@@ -14,9 +14,6 @@ namespace ProductShopMVC.Services.Services
             errorMessage = error;
         }
 
-        public DefaultError()
-        {
-
-        }
+        public DefaultError(){}
     }
 }
