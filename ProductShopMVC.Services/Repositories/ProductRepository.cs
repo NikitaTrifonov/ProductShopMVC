@@ -12,10 +12,10 @@ namespace ProductShopMVC.Services.Repositories
     {
         private static List<Product> ProductsList = new List<Product>
         {
-            new Product(Guid.NewGuid().ToString(), "Orange", "15.00"),
-            new Product(Guid.NewGuid().ToString(), "Lime", "30.00"),
-            new Product(Guid.NewGuid().ToString(), "Apple", "8.30"),
-            new Product(Guid.NewGuid().ToString(), "Lime", "40.00")
+            new Product(Guid.NewGuid().ToString(), "Апельсин", "15.00"),
+            new Product(Guid.NewGuid().ToString(), "Лайм", "30.00"),
+            new Product(Guid.NewGuid().ToString(), "Яблоко", "8.30"),
+            new Product(Guid.NewGuid().ToString(), "Лайм", "40.00")
         };
 
         public static Product GetProductById(string id)
@@ -32,7 +32,10 @@ namespace ProductShopMVC.Services.Repositories
         {
             return ProductsList;
         }
-
+        public static void AddProduct(Product newProduct)
+        {
+            ProductsList.Add(newProduct);
+        }
         public static void EditProduct(Product changedProduct)
         {
             Product oldProduct = ProductRepository.GetProductById(changedProduct.ProductId);

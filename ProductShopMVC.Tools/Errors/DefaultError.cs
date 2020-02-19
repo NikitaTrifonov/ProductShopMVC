@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductShopMVC.Services.Services
+namespace ProductShopMVC.Tools.Errors
 {
     public class DefaultError
     {

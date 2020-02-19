@@ -1,45 +1,59 @@
 ﻿function init() {
     var product = window.product;
     if (product === null) {
-        $("#inputId").val("Автозаполнение");
+        product = {
+            ProductId: "",
+            ProductName: "",
+            ProductPrice: ""
+        }
         $("#submitButton").val("Добавить");
-
+        $("#submitButton").attr('disabled', 'disabled');
+        AddOrEdit("AddProduct", product);
     }
     else {
         $("#inputId").val(product.ProductId);
         $("#inputName").val(product.ProductName);
         $("#inputPrice").val(product.ProductPrice);
-
-        $("#submitButton").click(function () {
-            product.ProductName = $("#inputName").val();
-            product.ProductPrice = Number.parseFloat($("#inputPrice").val()).toFixed(2);
-            if (!$.trim(product.ProductName)) {
-                getStatusMessage('failName');
-            }
-            else
-                if ($("#inputPrice").val() <= 0 || !$("#inputPrice").val()) {
-                    getStatusMessage("failPrice");
-                }
-                else {
-                    $.post("EditProduct", product, IsSuccess);
-                }
-        });
+        AddOrEdit("EditProduct", product);
     }
+}
+
+function AddOrEdit(controllerName, product) {
+    $("#submitButton").click(function () {
+        product.ProductName = $("#inputName").val();
+        product.ProductPrice = Number.parseFloat($("#inputPrice").val()).toFixed(2);
+        if (!$.trim(product.ProductName)) {
+            getStatusMessage('failName');
+            return;
+        }
+        if ($("#inputPrice").val() <= 0 || !$("#inputPrice").val()) {
+            getStatusMessage("failPrice");
+            return;
+        }
+
+        $.post(controllerName, product, function (RequestResult) {
+            if (RequestResult.IsSuccess) {
+
+                switch (controllerName) {
+                    case "AddProduct":
+                        getStatusMessage("successAdd");
+                        break;
+                    case "EditProduct":
+                        getStatusMessage("successEdit");
+                        break;
+                }
+            }
+            else {
+                setErrorColorMessage();
+                $("#statusMessage").text(RequestResult.Error);
+            }
+        });
+    });
 }
 
 $(function () {
     init()
 });
-
-function IsSuccess(RequestResault) {
-    if (RequestResault.IsSuccess) {
-        getStatusMessage('success')
-    }
-    else {
-        setErrorColorMessage();
-        $("#statusMessage").text(RequestResault.Error)
-    }
-}
 
 function setErrorColorMessage() {
     $("#statusMessage").removeAttr('class');
@@ -48,10 +62,15 @@ function setErrorColorMessage() {
 
 function getStatusMessage(status) {
     switch (status) {
-        case "success":
+        case "successEdit":
             $("#statusMessage").removeAttr('class');
             $("#statusMessage").attr('class', 'successMessage');
             $("#statusMessage").text("Успешно! Изменения сохранены!");
+            break;
+        case "successAdd":
+            $("#statusMessage").removeAttr('class');
+            $("#statusMessage").attr('class', 'successMessage');
+            $("#statusMessage").text("Успешно! Продукт сохранен!");
             break;
         case "failName":
             setErrorColorMessage()
@@ -72,6 +91,7 @@ function checkParams() {
         $("#submitButton").attr('disabled', 'disabled');
     }
 }
+
 function limitDecimal(e) {
     if (e.value.indexOf(".") != '-1') {
         e.value = e.value.substring(0, e.value.indexOf(".") + 3);

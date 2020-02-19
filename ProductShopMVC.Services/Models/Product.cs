@@ -11,12 +11,13 @@ namespace ProductShopMVC.Services.Models
         public string ProductId { get; set; }
         public string ProductName { get; set; }
         public string ProductPrice { get; set; }
-        
-        public Product (string id, string name, string price)
+
+        public Product(string id, string name, string price)
         {
             ProductId = id;
             ProductName = name;
             ProductPrice = price;
         }
+        public Product() { }
     }
 }

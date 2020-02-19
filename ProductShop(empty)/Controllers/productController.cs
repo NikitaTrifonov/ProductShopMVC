@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ProductShopMVC.Services.Services;
 using ProductShopMVC.Services.Models;
 using ProductShopMVC.Tools.Response;
+using ProductShopMVC.Tools.Errors;
 
 namespace ProductShop_empty_.Controllers
 {
@@ -13,11 +14,17 @@ namespace ProductShop_empty_.Controllers
     {
         private ProductServices productServices = new ProductServices();
 
-
         [HttpGet]
         public ActionResult AddProductView()
         {
             return View("~/Views/Product/AddEditProduct.cshtml");
+        }
+        [HttpPost]
+        public JsonResult AddProduct(AddEditProductModel product)
+        {
+            productServices.AddProduct(product, out DefaultError outError);
+            ResultHandler<Object> result = new ResultHandler<object>(outError.errorMessage);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
 

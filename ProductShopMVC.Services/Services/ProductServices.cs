@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ProductShopMVC.Services.Repositories;
 using ProductShopMVC.Services.Models;
 using ProductShopMVC.Tools.Response;
+using ProductShopMVC.Tools.Errors;
 
 
 
@@ -47,42 +48,81 @@ namespace ProductShopMVC.Services.Services
             }
             return result;
         }
+        public string GenerateId()
+        {
+            return Guid.NewGuid().ToString();
+        }
+
+        public void AddProduct(AddEditProductModel newProductFromView, out DefaultError outError)
+        {
+            outError = new DefaultError();
+
+            if (!String.IsNullOrEmpty(outError.errorMessage = CheckProductNullFromView(newProductFromView)))
+            {
+                return;
+            }
+            if (!String.IsNullOrEmpty(outError.errorMessage = CheckProductDataFromView(newProductFromView)))
+            {
+                return;
+            }
+
+            ProductRepository.AddProduct(SetProductData(newProductFromView));
+        }
 
         public void EditProduct(AddEditProductModel productFromView, out DefaultError outError)
         {
-            decimal price;
             outError = new DefaultError();
 
-            if (productFromView == null)
+            if (!String.IsNullOrEmpty(outError.errorMessage = CheckProductNullFromView(productFromView)))
             {
-                outError.errorMessage = "Ошибка данных. Пустая фйорма с клиенита!";
                 return;
             }
-            Product changedproduct = ProductRepository.GetProductById(productFromView.ProductId);
-
-            if (changedproduct == null)
+            if (ProductRepository.GetProductById(productFromView.ProductId) == null)
             {
                 outError.errorMessage = "Продукт с таким Id отсутствует в базе!";
                 return;
             }
+            if (!String.IsNullOrEmpty(outError.errorMessage = CheckProductDataFromView(productFromView)))
+            {
+                return;
+            }
+
+            ProductRepository.EditProduct(SetProductData(productFromView));
+        }
+
+        public Product SetProductData(AddEditProductModel productFromView)
+        {
+            Product newProduct = new Product();
+            newProduct.ProductId = String.IsNullOrEmpty(productFromView.ProductId) ? GenerateId() : productFromView.ProductId;
+            newProduct.ProductName = productFromView.ProductName;
+            newProduct.ProductPrice = productFromView.ProductPrice;
+            return newProduct;
+        }
+
+        public string CheckProductDataFromView(AddEditProductModel productFromView)
+        {
+            decimal price;
             if (String.IsNullOrEmpty(productFromView.ProductName))
             {
-                outError.errorMessage = "Ошибка ввода данных. Пустое значение названия продукта!";
-                return;
+                return "Ошибка ввода данных. Пустое значение названия продукта!";
             }
             if (String.IsNullOrEmpty(productFromView.ProductPrice))
             {
-                outError.errorMessage = "Ошибка ввода данных. Пустое значение цены продукта!";
-                return;
+                return "Ошибка ввода данных. Пустое значение цены продукта!";
             }
             if (Decimal.TryParse(productFromView.ProductPrice, out price))
             {
-                outError.errorMessage = "Ошибка ввода данных. Значение цены продукта не  может быть меньше или равна нулю!";
-                return;
+                return "Ошибка ввода данных. Значение цены продукта не  может быть меньше или равна нулю!";
             }
-            changedproduct.ProductName = productFromView?.ProductName;
-            changedproduct.ProductPrice = productFromView?.ProductPrice;
-            ProductRepository.EditProduct(changedproduct);
+            return null;
+        }
+        public string CheckProductNullFromView(AddEditProductModel productFromView)
+        {
+            if (productFromView == null)
+            {
+                return "Ошибка данных. Пустая форма с клиенита!";
+            }
+            else return null;
         }
     }
 }
