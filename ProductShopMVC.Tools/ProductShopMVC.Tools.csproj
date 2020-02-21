@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Errors\DefaultError.cs" />
+    <Compile Include="Generate\GeneratorId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Response\ResultHandler.cs" />
   </ItemGroup>

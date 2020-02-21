@@ -7,6 +7,7 @@ using ProductShopMVC.Services.Repositories;
 using ProductShopMVC.Services.Models;
 using ProductShopMVC.Tools.Response;
 using ProductShopMVC.Tools.Errors;
+using ProductShopMVC.Tools.Generate;
 
 
 
@@ -26,12 +27,12 @@ namespace ProductShopMVC.Services.Services
 
             if (name == null)
             {
-                outError.errorMessage = "Ошибка ввода названия. Пустое значение!";
+                outError.ErrorMessage = "Ошибка ввода названия. Пустое значение!";
                 return new List<Product>();
             }
             if (result == null || !result.Any())
             {
-                outError.errorMessage = "Продукт с данным название отсутствует!";
+                outError.ErrorMessage = "Продукт с данным название отсутствует!";
                 return new List<Product>();
             }
             return ProductRepository.GetProductsByName(name);
@@ -44,24 +45,21 @@ namespace ProductShopMVC.Services.Services
 
             if (result == null || !result.Any())
             {
-                outError.errorMessage = "Список продуктов пуст!!!";
+                outError.ErrorMessage = "Список продуктов пуст!!!";
             }
             return result;
         }
-        public string GenerateId()
-        {
-            return Guid.NewGuid().ToString();
-        }
+       
 
         public void AddProduct(AddEditProductModel newProductFromView, out DefaultError outError)
         {
             outError = new DefaultError();
 
-            if (!String.IsNullOrEmpty(outError.errorMessage = CheckProductNullFromView(newProductFromView)))
+            if (!String.IsNullOrEmpty(outError.ErrorMessage = CheckProductNullFromView(newProductFromView)))
             {
                 return;
             }
-            if (!String.IsNullOrEmpty(outError.errorMessage = CheckProductDataFromView(newProductFromView)))
+            if (!String.IsNullOrEmpty(outError.ErrorMessage = CheckProductDataFromView(newProductFromView)))
             {
                 return;
             }
@@ -73,16 +71,16 @@ namespace ProductShopMVC.Services.Services
         {
             outError = new DefaultError();
 
-            if (!String.IsNullOrEmpty(outError.errorMessage = CheckProductNullFromView(productFromView)))
+            if (!String.IsNullOrEmpty(outError.ErrorMessage = CheckProductNullFromView(productFromView)))
             {
                 return;
             }
             if (ProductRepository.GetProductById(productFromView.ProductId) == null)
             {
-                outError.errorMessage = "Продукт с таким Id отсутствует в базе!";
+                outError.ErrorMessage = "Продукт с таким Id отсутствует в базе!";
                 return;
             }
-            if (!String.IsNullOrEmpty(outError.errorMessage = CheckProductDataFromView(productFromView)))
+            if (!String.IsNullOrEmpty(outError.ErrorMessage = CheckProductDataFromView(productFromView)))
             {
                 return;
             }
@@ -93,7 +91,7 @@ namespace ProductShopMVC.Services.Services
         public Product SetProductData(AddEditProductModel productFromView)
         {
             Product newProduct = new Product();
-            newProduct.ProductId = String.IsNullOrEmpty(productFromView.ProductId) ? GenerateId() : productFromView.ProductId;
+            newProduct.ProductId = String.IsNullOrEmpty(productFromView.ProductId) ? GeneratorId.GenerateId() : productFromView.ProductId;
             newProduct.ProductName = productFromView.ProductName;
             newProduct.ProductPrice = productFromView.ProductPrice;
             return newProduct;

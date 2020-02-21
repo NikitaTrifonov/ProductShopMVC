@@ -8,10 +8,10 @@ namespace ProductShopMVC.Tools.Errors
 {
     public class DefaultError
     {
-        public string errorMessage { get; set; }
+        public string ErrorMessage { get; set; }
         public DefaultError(string error)
         {
-            errorMessage = error;
+            ErrorMessage = error;
         }
 
         public DefaultError(){}

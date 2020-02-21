@@ -23,7 +23,7 @@ namespace ProductShop_empty_.Controllers
         public JsonResult AddProduct(AddEditProductModel product)
         {
             productServices.AddProduct(product, out DefaultError outError);
-            ResultHandler<Object> result = new ResultHandler<object>(outError.errorMessage);
+            ResultHandler<Object> result = new ResultHandler<object>(outError.ErrorMessage);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -40,7 +40,7 @@ namespace ProductShop_empty_.Controllers
         public JsonResult EditProduct(AddEditProductModel product)
         {
             productServices.EditProduct(product, out DefaultError outError);
-            ResultHandler<Object> result = new ResultHandler<object>(outError.errorMessage);
+            ResultHandler<Object> result = new ResultHandler<object>(outError.ErrorMessage);
             return Json(result, JsonRequestBehavior.AllowGet);            
         }
 
@@ -54,7 +54,7 @@ namespace ProductShop_empty_.Controllers
         [HttpGet]
         public JsonResult GetAllProducts()
         {
-            ResultHandler<List<Product>> result = new ResultHandler<List<Product>>(productServices.GetAllProducts(out DefaultError outError), outError.errorMessage);
+            ResultHandler<List<Product>> result = new ResultHandler<List<Product>>(productServices.GetAllProducts(out DefaultError outError), outError.ErrorMessage);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -62,7 +62,7 @@ namespace ProductShop_empty_.Controllers
         [HttpGet]
         public JsonResult GetProductByName(string name)
         {
-            ResultHandler<List<Product>> result = new ResultHandler<List<Product>>(productServices.GetProductsByName(name, out DefaultError outError), outError.errorMessage);
+            ResultHandler<List<Product>> result = new ResultHandler<List<Product>>(productServices.GetProductsByName(name, out DefaultError outError), outError.ErrorMessage);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
