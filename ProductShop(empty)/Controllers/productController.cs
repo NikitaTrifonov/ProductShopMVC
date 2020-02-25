@@ -7,6 +7,7 @@ using ProductShopMVC.Services.Services;
 using ProductShopMVC.Services.Models;
 using ProductShopMVC.Tools.Response;
 using ProductShopMVC.Tools.Errors;
+using ProductShop_empty_.Models.Filtres;
 
 namespace ProductShop_empty_.Controllers
 {
@@ -41,7 +42,7 @@ namespace ProductShop_empty_.Controllers
         {
             productServices.EditProduct(product, out DefaultError outError);
             ResultHandler<Object> result = new ResultHandler<object>(outError.ErrorMessage);
-            return Json(result, JsonRequestBehavior.AllowGet);            
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -50,6 +51,20 @@ namespace ProductShop_empty_.Controllers
             return View();
         }
 
+        [HttpGet]
+
+        public JsonResult GetProductsCategory()
+        {
+            ProductCategoryFilter productFilter = new ProductCategoryFilter();
+            ResultHandler<List<string>> result = new ResultHandler<List<string>>(productFilter.ProductCategory, "");
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult GetProductsByCategory(string filter)
+        {
+            ResultHandler<List<Product>> result = new ResultHandler<List<Product>>(productServices.GetProductsByCategory(filter, out DefaultError outError), outError.ErrorMessage);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet]
         public JsonResult GetAllProducts()

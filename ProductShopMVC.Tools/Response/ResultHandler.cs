@@ -11,16 +11,19 @@ namespace ProductShopMVC.Tools.Response
         public String Error { get; set; }
         public Boolean IsSuccess { get { return String.IsNullOrWhiteSpace(Error); } }
         public T Data { get; set; }
-        
+
         public ResultHandler(T data, String error = "")
         {
             Data = data;
             Error = error;
         }
-        public ResultHandler(){}
+        public ResultHandler()
+        {
+        }
         public ResultHandler(String error = "")
         {
             Error = error;
         }
+
     }
 }

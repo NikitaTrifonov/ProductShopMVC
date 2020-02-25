@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProductShopMVC.Tools.Generate
 {
-  public static  class GeneratorId
+    public static class GeneratorId
     {
         public static string GenerateId()
         {

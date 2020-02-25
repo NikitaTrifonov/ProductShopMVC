@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ProductShopMVC.Services.Repositories;
 using ProductShopMVC.Services.Models;
-using ProductShopMVC.Tools.Response;
 using ProductShopMVC.Tools.Errors;
 using ProductShopMVC.Tools.Generate;
+using ProductShopMVC.Services.Types;
 
 
 
@@ -18,6 +18,32 @@ namespace ProductShopMVC.Services.Services
         public Product GetProductById(string id)
         {
             return ProductRepository.GetProductById(id);
+        }
+
+        public List<Product> GetProductsByCategory(string filter, out DefaultError outError)
+        {
+            outError = new DefaultError();
+            ProductCategory category = CategoryConverter.RusStringToEnum(filter);
+
+            if (category == ProductCategory.Unknow)
+            {
+                outError.ErrorMessage = "Ошибка! Неизвестная категория!";
+                return new List<Product>();
+            }
+
+            List<Product> result = ProductRepository.GetProductsByCategory(category);
+            if (result == null)
+            {
+                outError.ErrorMessage = "Ошибка формирования результата фильтрации по категории!";
+                return new List<Product>();
+            }
+            if (!result.Any())
+            {
+                outError.ErrorMessage = "Нет продуктов в данной категории!";
+                return new List<Product>();
+            }
+            return result;
+
         }
 
         public List<Product> GetProductsByName(string name, out DefaultError outError)
@@ -49,7 +75,7 @@ namespace ProductShopMVC.Services.Services
             }
             return result;
         }
-       
+
 
         public void AddProduct(AddEditProductModel newProductFromView, out DefaultError outError)
         {
@@ -88,7 +114,7 @@ namespace ProductShopMVC.Services.Services
             ProductRepository.EditProduct(SetProductData(productFromView));
         }
 
-        public Product SetProductData(AddEditProductModel productFromView)
+        private Product SetProductData(AddEditProductModel productFromView)
         {
             Product newProduct = new Product();
             newProduct.ProductId = String.IsNullOrEmpty(productFromView.ProductId) ? GeneratorId.GenerateId() : productFromView.ProductId;
@@ -97,7 +123,7 @@ namespace ProductShopMVC.Services.Services
             return newProduct;
         }
 
-        public string CheckProductDataFromView(AddEditProductModel productFromView)
+        private string CheckProductDataFromView(AddEditProductModel productFromView)
         {
             decimal price;
             if (String.IsNullOrEmpty(productFromView.ProductName))
@@ -114,7 +140,7 @@ namespace ProductShopMVC.Services.Services
             }
             return null;
         }
-        public string CheckProductNullFromView(AddEditProductModel productFromView)
+        private string CheckProductNullFromView(AddEditProductModel productFromView)
         {
             if (productFromView == null)
             {
