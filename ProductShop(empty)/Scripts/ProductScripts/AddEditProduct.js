@@ -33,7 +33,6 @@ function AddOrEdit(controllerName, product) {
 
         $.post(controllerName, product, function (RequestResult) {
             if (RequestResult.IsSuccess) {
-
                 switch (controllerName) {
                     case "AddProduct":
                         getStatusMessage("successAdd");

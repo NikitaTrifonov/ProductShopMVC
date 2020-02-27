@@ -16,7 +16,6 @@ $(document).ready(function () {
 
 
 $("#ProductCategory").change(function () {
-    //var str = $("select option:selected").text() ;
     $("select option:selected").each(function () {
         $.getJSON("GetProductsByCategory", { Filter: $("select option:selected").text() }, addContentInTable)
     });    
@@ -44,8 +43,8 @@ function addContentInTable(RequestResult) {
             tr = $('<tr class ="trContent">');
             tr.append("<td>" + (i + 1) + "</td>");
             tr.append("<td>" + RequestResult.Data[i].ProductName + "</td>");
-            tr.append("<td>" + RequestResult.Data[i].ProductPrice + "</td>");
             tr.append("<td>" + RequestResult.Data[i].CategoryString + "</td>")
+            tr.append("<td>" + RequestResult.Data[i].ProductPrice + "</td>");            
             tr.append("<td><a href ='EditProductView?id=" + RequestResult.Data[i].ProductId + "'>Редактировать</a >" + "</td > ");
             $('#productsTable').append(tr);
         }

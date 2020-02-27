@@ -32,7 +32,7 @@ namespace ProductShopMVC.Services.Types
 
         public static ProductCategory RusStringToEnum(string filter)
         {
-            ProductCategory outCategory = ProductCategory.Unknow;
+            ProductCategory outCategory = ProductCategory.All;
             switch (filter)
             {
                 case "Ягоды":

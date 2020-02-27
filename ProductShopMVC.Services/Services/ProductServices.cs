@@ -25,10 +25,9 @@ namespace ProductShopMVC.Services.Services
             outError = new DefaultError();
             ProductCategory category = CategoryConverter.RusStringToEnum(filter);
 
-            if (category == ProductCategory.Unknow)
+            if (category == ProductCategory.All)
             {
-                outError.ErrorMessage = "Ошибка! Неизвестная категория!";
-                return new List<Product>();
+                return ProductRepository.GetAllProducts();
             }
 
             List<Product> result = ProductRepository.GetProductsByCategory(category);
@@ -43,8 +42,8 @@ namespace ProductShopMVC.Services.Services
                 return new List<Product>();
             }
             return result;
-
         }
+
 
         public List<Product> GetProductsByName(string name, out DefaultError outError)
         {

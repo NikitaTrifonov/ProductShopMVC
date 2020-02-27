@@ -8,7 +8,7 @@ namespace ProductShopMVC.Services.Types
 {
     public enum ProductCategory
     {
-        Unknow =1,
+        All =1,
         Fruits ,
         Vegetables,
         Juices,
