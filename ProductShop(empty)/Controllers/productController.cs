@@ -8,6 +8,7 @@ using ProductShopMVC.Services.Models;
 using ProductShopMVC.Tools.Response;
 using ProductShopMVC.Tools.Errors;
 using ProductShop_empty_.Models.Filtres;
+using ProductShop_empty_.Models.ProductForEdit;
 
 namespace ProductShop_empty_.Controllers
 {
@@ -18,7 +19,8 @@ namespace ProductShop_empty_.Controllers
         [HttpGet]
         public ActionResult AddProductView()
         {
-            return View("~/Views/Product/AddEditProduct.cshtml");
+            ProductForEdit product = new ProductForEdit();
+            return View("~/Views/Product/AddEditProduct.cshtml", product);
         }
         [HttpPost]
         public JsonResult AddProduct(AddEditProductModel product)
@@ -28,11 +30,10 @@ namespace ProductShop_empty_.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-
         [HttpGet]
         public ActionResult EditProductView(string id)
         {
-            var product = productServices.GetProductById(id);
+            ProductForEdit product = new ProductForEdit(productServices.GetProductById(id));
             return View("~/Views/Product/AddEditProduct.cshtml", product);
         }
 

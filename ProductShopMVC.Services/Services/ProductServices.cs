@@ -119,6 +119,7 @@ namespace ProductShopMVC.Services.Services
             newProduct.ProductId = String.IsNullOrEmpty(productFromView.ProductId) ? GeneratorId.GenerateId() : productFromView.ProductId;
             newProduct.ProductName = productFromView.ProductName;
             newProduct.ProductPrice = productFromView.ProductPrice;
+            newProduct.ProductType = CategoryConverter.RusStringToEnum(productFromView.ProductCategory);
             return newProduct;
         }
 

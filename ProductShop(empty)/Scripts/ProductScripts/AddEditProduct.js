@@ -1,20 +1,31 @@
 ﻿function init() {
-    var product = window.product;
+    var product = window.product.Data;
+    var category = window.product.Category;
     if (product === null) {
         product = {
             ProductId: "",
             ProductName: "",
-            ProductPrice: ""
+            ProductPrice: "",
+            ProductCategory: ""
         }
+        addProductCategory(category);
         $("#submitButton").val("Добавить");
         $("#submitButton").attr('disabled', 'disabled');
         AddOrEdit("AddProduct", product);
     }
     else {
+        addProductCategory(category);
         $("#inputId").val(product.ProductId);
         $("#inputName").val(product.ProductName);
         $("#inputPrice").val(product.ProductPrice);
+        $("#ProductCategory").val(product.ProductType).change();
         AddOrEdit("EditProduct", product);
+    }
+}
+
+function addProductCategory(category) {
+    for (var i = 1; i < category.ProductCategory.length; i++) {
+        $("#ProductCategory").append("<option value='" + (i + 1) + "'>" + category.ProductCategory[i] + "</option>");
     }
 }
 
@@ -22,6 +33,7 @@ function AddOrEdit(controllerName, product) {
     $("#submitButton").click(function () {
         product.ProductName = $("#inputName").val();
         product.ProductPrice = Number.parseFloat($("#inputPrice").val()).toFixed(2);
+        product.ProductCategory = $("select option:selected").text();
         if (!$.trim(product.ProductName)) {
             getStatusMessage('failName');
             return;
