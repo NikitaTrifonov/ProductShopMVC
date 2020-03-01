@@ -3,19 +3,34 @@
 <html>
 <head>
     <link rel="shortcut icon" href="#" />
-      <link href="@Url.Content("~/Content/ProductStyle/ProductShop.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/ProductStyle/ProductShop.css")" rel="stylesheet" type="text/css" />
     <meta charset="utf-8" />
     <title>ProductShop</title>
     <script src="~/Scripts/jquery-3.4.1.js"></script>
-
 </head>
 
 <body>
-    <nav>
-        <h1> ProductShop</h1>
-    </nav>
-    @RenderBody()
-    @RenderSection("scripts", false)
-</body>
+    <div class="intro">
+        <header class="header">
+            <div class="container">
+                <div class="header_inner">
+                    <div class="header_logo">ProductShop</div>
+                    <nav class="nav">
+                        <a class="nav_link" href="~/Home/Index">Главная</a>
+                        <a class="nav_link" href="~/Product/ProductList">Список продуктов</a>
+                        <a class="nav_link" >Клиенты</a>
+                        <a class="nav_link" href="~/Info/Index">О приложении</a>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div class="content">
+            @RenderBody()
 
+        </div>
+        @RenderSection("scripts", false)
+    </div>
+
+
+</body>
 </html>

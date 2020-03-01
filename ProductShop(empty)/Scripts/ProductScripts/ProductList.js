@@ -6,10 +6,6 @@ $('#getProductByName').click(function () {
     $.getJSON("GetProductByName", { Name: $('#requiredProductName').val() }, addContentInTable)
 })
 
-$('#reloadProductsList').click(function () {
-    $.getJSON("GetAllProducts", addContentInTable);
-})
-
 $("#ProductCategory").change(function () {
     $("select option:selected").each(function () {
         $.getJSON("GetProductsByCategory", { Filter: $("select option:selected").text() }, addContentInTable)

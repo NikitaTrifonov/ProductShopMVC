@@ -47,7 +47,7 @@ namespace ProductShop_empty_.Controllers
         }
 
 
-        public ActionResult Home()
+        public ActionResult ProductList()
         {
             return View();
         }
