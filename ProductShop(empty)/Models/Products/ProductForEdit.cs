@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ProductShopMVC.Services.Models;
-using ProductShop_empty_.Models.Filtres;
+using ProductShopMVC.Services.Models.Products;
+using ProductShop_empty_.Models.Products;
 
-namespace ProductShop_empty_.Models.ProductForEdit
+namespace ProductShop_empty_.Models.Products
 {
     public class ProductForEdit
     {
         public Product Data { get; set; }
-        public ProductCategoryFilter Category { get; set; }
+        public ProductCategories Category { get; set; }
 
         public ProductForEdit(Product data)
         {
             Data = data;
-            Category = new ProductCategoryFilter();
+            Category = new ProductCategories();
         }
         public ProductForEdit()
         {          
-            Category = new ProductCategoryFilter();
+            Category = new ProductCategories();
         }
 
     }

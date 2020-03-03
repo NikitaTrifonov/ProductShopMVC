@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ProductShopMVC.Services.Types;
+using ProductShopMVC.Services.Models.Products.Types;
 
-namespace ProductShop_empty_.Models.Filtres
+namespace ProductShop_empty_.Models.Products
 {
-    public class ProductCategoryFilter
+    public class ProductCategories
     {
         public List<string> ProductCategory
         {

@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProductShopMVC.Services.Repositories;
-using ProductShopMVC.Services.Types;
-
-namespace ProductShopMVC.Services.Models
+using ProductShopMVC.Services.Models.Products.Types;
+namespace ProductShopMVC.Services.Models.Products
 {
     public class Product
     {

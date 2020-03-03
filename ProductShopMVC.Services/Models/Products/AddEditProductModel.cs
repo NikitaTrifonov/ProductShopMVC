@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductShopMVC.Services.Models
+namespace ProductShopMVC.Services.Models.Products
 {
     public class AddEditProductModel
     {

@@ -9,12 +9,13 @@
             ProductCategory: ""
         }
         addProductCategory(category);
-        $("#submitButton").val("Добавить");
+        $("#submitButton").text("Добавить");
         $("#submitButton").attr('disabled', 'disabled');
         AddOrEdit("AddProduct", product);
     }
     else {
         addProductCategory(category);
+        $("#submitButton").text("Изменить");
         $("#inputId").val(product.ProductId);
         $("#inputName").val(product.ProductName);
         $("#inputPrice").val(product.ProductPrice);
@@ -61,7 +62,6 @@ function AddOrEdit(controllerName, product) {
         });
     });
 }
-
 $(function () {
     init()
 });

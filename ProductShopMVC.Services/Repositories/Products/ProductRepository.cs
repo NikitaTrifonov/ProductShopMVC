@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProductShopMVC.Services.Models;
-using ProductShopMVC.Services.Types;
+using ProductShopMVC.Services.Models.Products;
+using ProductShopMVC.Services.Models.Products.Types;
 
 
-namespace ProductShopMVC.Services.Repositories
+
+
+namespace ProductShopMVC.Services.Repositories.Products
 {
     public static class ProductRepository
     {

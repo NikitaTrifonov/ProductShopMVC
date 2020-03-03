@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProductShopMVC.Services.Repositories;
-using ProductShopMVC.Services.Models;
+using ProductShopMVC.Services.Repositories.Products;
+using ProductShopMVC.Services.Models.Products;
 using ProductShopMVC.Tools.Errors;
 using ProductShopMVC.Tools.Generate;
-using ProductShopMVC.Services.Types;
+using ProductShopMVC.Services.Models.Products.Types;
 
 
 
-namespace ProductShopMVC.Services.Services
+namespace ProductShopMVC.Services.Services.Products
 {
     public class ProductServices
     {

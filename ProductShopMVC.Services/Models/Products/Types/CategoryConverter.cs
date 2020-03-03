@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductShopMVC.Services.Types
+namespace ProductShopMVC.Services.Models.Products.Types
 {
     public static class CategoryConverter
     {

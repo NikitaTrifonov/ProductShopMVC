@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ProductShopMVC.Services.Services;
-using ProductShopMVC.Services.Models;
+using ProductShopMVC.Services.Services.Products;
+using ProductShopMVC.Services.Models.Products;
 using ProductShopMVC.Tools.Response;
 using ProductShopMVC.Tools.Errors;
-using ProductShop_empty_.Models.Filtres;
-using ProductShop_empty_.Models.ProductForEdit;
-
+using ProductShop_empty_.Models.Products;
 namespace ProductShop_empty_.Controllers
 {
     public class ProductController : Controller
@@ -46,7 +44,7 @@ namespace ProductShop_empty_.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-
+        [HttpGet]
         public ActionResult ProductList()
         {
             return View();
@@ -56,7 +54,7 @@ namespace ProductShop_empty_.Controllers
 
         public JsonResult GetProductsCategory()
         {
-            ProductCategoryFilter productFilter = new ProductCategoryFilter();
+            ProductCategories productFilter = new ProductCategories();
             ResultHandler<List<string>> result = new ResultHandler<List<string>>(productFilter.ProductCategory, "");
             return Json(result, JsonRequestBehavior.AllowGet);
         }

@@ -1,4 +1,4 @@
-﻿@model ProductShop_empty_.Models.ProductForEdit.ProductForEdit
+﻿@model ProductShop_empty_.Models.Products.ProductForEdit
 @using Newtonsoft.Json
 @{
     ViewBag.Title = Model.Data == null ? "Добавление продукта" : "Редактирование продукта";
@@ -18,7 +18,10 @@
     <p><input id="inputPrice" type="number" min="0" step="0.01" placeholder="0.00" onkeyup="checkParams()" oninput="limitDecimal(this)" /> Цена</p>
 </div>
 <div>
-    <input type="button" id="submitButton" value="Изменить" />
+    <div class="buttonBox">
+        <a id="submitButton" class="btnAdd" /></a>
+        <a class="btnAdd" href="~/Product/ProductList">К списку</a>
+    </div>
     <p id="errorMessage"></p>
     <p id="statusMessage"></p>
 </div>

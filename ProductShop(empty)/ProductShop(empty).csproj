@@ -161,8 +161,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Filtres\ProductCategoryFilter.cs" />
-    <Compile Include="Models\ProductForEdit\ProductForEdit.cs" />
+    <Compile Include="Models\Products\ProductCategories.cs" />
+    <Compile Include="Models\Products\ProductForEdit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

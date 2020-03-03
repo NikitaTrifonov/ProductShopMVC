@@ -108,10 +108,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 /*Стиль кнопки "Добавтиь" на страницы товаров*/
 .btnAdd {
-    display: inline-block;
-    background: #8C959D;
-    color: #fff;
+    display: inline-block;  
+    background: #ffffff;
+    color: #000;
     padding: 1rem 1.5rem;
     text-decoration: none;
+    border: 1px solid #000;
     border-radius: 3px;
+}
+
+
+.btnAdd:active{
+    transform: scale(0.95);
+    background:#f1ee76
 }
