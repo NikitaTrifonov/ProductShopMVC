@@ -107,7 +107,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 18px;
 }
 /*Стиль кнопки "Добавтиь" на страницы товаров*/
-.btnAdd {
+.btnFunc {
     display: inline-block;  
     background: #ffffff;
     color: #000;
@@ -118,7 +118,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-.btnAdd:active{
+.btnFunc:active{
     transform: scale(0.95);
     background:#f1ee76
+}
+/*ClientsView*/
+.clientListBtnBox{
+    margin-top: 10px;
 }

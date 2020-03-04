@@ -21,7 +21,7 @@ namespace ProductShop_empty_.Controllers
             return View("~/Views/Product/AddEditProduct.cshtml", product);
         }
         [HttpPost]
-        public JsonResult AddProduct(AddEditProductModel product)
+        public JsonResult AddProduct(AddEditProduct product)
         {
             productServices.AddProduct(product, out DefaultError outError);
             ResultHandler<Object> result = new ResultHandler<object>(outError.ErrorMessage);
@@ -37,7 +37,7 @@ namespace ProductShop_empty_.Controllers
 
 
         [HttpPost]
-        public JsonResult EditProduct(AddEditProductModel product)
+        public JsonResult EditProduct(AddEditProduct product)
         {
             productServices.EditProduct(product, out DefaultError outError);
             ResultHandler<Object> result = new ResultHandler<object>(outError.ErrorMessage);

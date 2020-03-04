@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProductShopMVC.Services.Models.Products
 {
-    public class AddEditProductModel
+    public class AddEditProduct
     {
         public string ProductId { get; set; }
         public string ProductName { get; set; }
@@ -14,7 +14,7 @@ namespace ProductShopMVC.Services.Models.Products
         public string ProductCategory { get; set; }
 
 
-        public AddEditProductModel(string id, string name, string price, string category)
+        public AddEditProduct(string id, string name, string price, string category)
         {
             ProductId = id;
             ProductName = name;
@@ -22,7 +22,7 @@ namespace ProductShopMVC.Services.Models.Products
             ProductCategory = category;
         }
 
-        public AddEditProductModel() { }
+        public AddEditProduct() { }
 
     }
 }

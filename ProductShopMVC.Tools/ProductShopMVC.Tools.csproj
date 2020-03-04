@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Check\CheckDataPattern.cs" />
     <Compile Include="Errors\DefaultError.cs" />
     <Compile Include="Generate\GeneratorId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

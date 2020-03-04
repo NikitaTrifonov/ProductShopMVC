@@ -1,0 +1,57 @@
+﻿@model ProductShopMVC.Services.Models.Clients.Client
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = Model == null ? "Добавление клиента" : "Редактирование клиента";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script>
+        var client = @Html.Raw(JsonConvert.SerializeObject(Model));
+    </script>
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="inputDataClientBox">
+    <table border="0" class="AddEditClientTable">
+        <tr id="trClientId" hidden>
+            <td>
+                Id:
+            </td>
+            <td>
+                <input id="inputClientId" />
+            </td>
+        </tr>
+        <tr>
+            <td>Фамилия:</td>
+            <td><input type="text" id="inputClientLastName" placeholder="Фамилия"></td>
+        </tr>
+        <tr>
+            <td>Имя:</td>
+            <td><input type="text" id="inputClientFirstName" placeholder="Имя"></td>
+        </tr>
+        <tr>
+            <td>Отчество:</td>
+            <td><input type="text" id="inputClientMiddleName" placeholder="Отчество"></td>
+        </tr>
+        <tr>
+            <td>Дата рождения:</td>
+            <td><input type="date" id="inputClientBirthday"></td>
+        </tr>
+        <tr>
+            <td>Номер телефона:</td>
+            <td><input type="text" id="inputClientPhoneNumber" placeholder="+7(___)___-__-__"></td>
+        </tr>
+        <tr>
+            <td>E-mail:</td>
+            <td><input type="text" id="inputClientEmail" placeholder="E-mail"></td>
+        </tr>
+    </table>
+    <p class="errorMessage"></p>
+</div>
+<div class="buttonBox">
+    <a class="btnFunc" id="submitBtnClient"></a>
+    <a class="btnFunc" href="~/Clients/ClientsList">К списку</a>
+</div>
+<script src="~/Scripts/ClientsScripts/AddEditClient.js"></script>
+

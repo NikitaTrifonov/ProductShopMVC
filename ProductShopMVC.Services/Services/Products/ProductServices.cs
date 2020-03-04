@@ -76,7 +76,7 @@ namespace ProductShopMVC.Services.Services.Products
         }
 
 
-        public void AddProduct(AddEditProductModel newProductFromView, out DefaultError outError)
+        public void AddProduct(AddEditProduct newProductFromView, out DefaultError outError)
         {
             outError = new DefaultError();
 
@@ -92,7 +92,7 @@ namespace ProductShopMVC.Services.Services.Products
             ProductRepository.AddProduct(SetProductData(newProductFromView));
         }
 
-        public void EditProduct(AddEditProductModel productFromView, out DefaultError outError)
+        public void EditProduct(AddEditProduct productFromView, out DefaultError outError)
         {
             outError = new DefaultError();
 
@@ -113,7 +113,7 @@ namespace ProductShopMVC.Services.Services.Products
             ProductRepository.EditProduct(SetProductData(productFromView));
         }
 
-        private Product SetProductData(AddEditProductModel productFromView)
+        private Product SetProductData(AddEditProduct productFromView)
         {
             Product newProduct = new Product();
             newProduct.ProductId = String.IsNullOrEmpty(productFromView.ProductId) ? GeneratorId.GenerateId() : productFromView.ProductId;
@@ -123,7 +123,7 @@ namespace ProductShopMVC.Services.Services.Products
             return newProduct;
         }
 
-        private string CheckProductDataFromView(AddEditProductModel productFromView)
+        private string CheckProductDataFromView(AddEditProduct productFromView)
         {
             decimal price;
             if (String.IsNullOrEmpty(productFromView.ProductName))
@@ -140,7 +140,7 @@ namespace ProductShopMVC.Services.Services.Products
             }
             return null;
         }
-        private string CheckProductNullFromView(AddEditProductModel productFromView)
+        private string CheckProductNullFromView(AddEditProduct productFromView)
         {
             if (productFromView == null)
             {

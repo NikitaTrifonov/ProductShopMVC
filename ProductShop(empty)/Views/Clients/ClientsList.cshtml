@@ -1,0 +1,39 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h2>Список клиентов</h2>
+    <div class="searchBox">
+        <label>
+            Фильтр поиска:
+            <select>
+                <option value="0">Фамилия</option>
+                <option value="1">Номер телефона</option>
+                <option value="2">E-mail</option>
+            </select>
+            <input type="text" id="requiredClientData" />
+        </label>
+        <input type="button" value="Поиск" id="searchClientBtn" />
+    </div>
+    <div class="clientsTableBox">
+        <table border="1" id="clientsTable">
+            <tr>
+                <th>№</th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Дата рождения</th>
+                <th>Номер телефона</th>
+                <th>E-mail</th>
+            </tr>
+        </table>
+        <p id="errorMessage" class="errorMessage"></p>
+    </div>
+    <div class="clientListBtnBox">
+        <a class="btnFunc" href="~/Clients/AddClientView">Добавить</a>
+    </div>
+</div>
+<script src="~/Scripts/ClientsScripts/ClientsList.js"></script>
+
