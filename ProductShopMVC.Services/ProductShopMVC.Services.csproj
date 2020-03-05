@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Clients\AddEditClient.cs" />
     <Compile Include="Models\Clients\Client.cs" />
     <Compile Include="Models\Products\AddEditProduct.cs" />
     <Compile Include="Models\Products\Product.cs" />

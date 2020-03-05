@@ -29,6 +29,12 @@ namespace ProductShop_empty_.Controllers.Clients
         {
             return View("~/Views/Clients/AddEditClient.cshtml");
         }
+
+        [HttpPost]
+        public void AddClient( AddEditClient clientFromView)
+        {
+            clientsServices.AddClient(clientFromView, out DefaultError outError);
+        }
     }
     
 }
