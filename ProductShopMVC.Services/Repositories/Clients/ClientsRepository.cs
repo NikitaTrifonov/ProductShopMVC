@@ -24,5 +24,13 @@ namespace ProductShopMVC.Services.Repositories.Clients
         {
             ClientsList.Add(newClient);
         }
-     }
+        public static Client GetClientById(string id)
+        {
+            return ClientsList.FirstOrDefault(client => client.ClientId == id);
+        }
+        public static Client GetClientByEmail(string email)
+        {
+            return ClientsList.FirstOrDefault(client => (String.Compare(client.ClientEmail, email) == 0));
+        }
+    }
 }

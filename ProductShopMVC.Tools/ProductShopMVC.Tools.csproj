@@ -41,14 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Check\CheckData.cs" />
     <Compile Include="Conversion\ConverseDate\ConverseDateFromView.cs" />
     <Compile Include="Errors\DefaultError.cs" />
     <Compile Include="Generate\GeneratorId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Response\ResultHandler.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Check\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

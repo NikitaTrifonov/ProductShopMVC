@@ -36,18 +36,18 @@
         </tr>
         <tr>
             <td>Дата рождения:</td>
-            <td><input type="date" id="inputClientBirthday"></td>
+            <td><input type="date" id="inputClientBirthday"  min="1900-01-01" max="2019-12-31"></td>
         </tr>
         <tr>
             <td>Номер телефона:</td>
-            <td><input type="text" id="inputClientPhoneNumber" placeholder="+7(___)___-__-__"></td>
+            <td><input type="text" id="inputClientPhoneNumber" placeholder="+7(___)___-__-__" ></td>
         </tr>
         <tr>
             <td>E-mail:</td>
             <td><input type="text" id="inputClientEmail" placeholder="E-mail"></td>
         </tr>
     </table>
-    <p class="errorMessage"></p>
+    <p id="statusMessage"></p>
 </div>
 <div class="buttonBox">
     <a class="btnFunc" id="submitBtnClient"></a>

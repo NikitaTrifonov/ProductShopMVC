@@ -31,10 +31,12 @@ namespace ProductShop_empty_.Controllers.Clients
         }
 
         [HttpPost]
-        public void AddClient( AddEditClient clientFromView)
+        public JsonResult AddClient(AddEditClient clientFromView)
         {
             clientsServices.AddClient(clientFromView, out DefaultError outError);
+            ResultHandler<Object> result = new ResultHandler<object>(outError.ErrorMessage);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
-    
+
 }
