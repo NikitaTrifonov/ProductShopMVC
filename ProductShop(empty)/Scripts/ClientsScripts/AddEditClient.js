@@ -14,11 +14,25 @@
         $("#submitBtnClient").text("Добавить");
         AddOrEditClient("AddClient", client);
     }
+    else {
+        $("#submitBtnClient").text("Изменить");
+        setClientInputs(client);
+        AddOrEditClient("EditClient", client);
+    }
 }
 
 $(function () {
     init()
 });
+
+function setClientInputs(client) {
+    $("#inputClientLastName").val(client.ClientLastName);
+    $("#inputClientFirstName").val(client.ClientFirstName);
+    $("#inputClientMiddleName").val(client.ClientMiddleName);   
+    $("#inputClientBirthday").val(moment(client.ClientBirthday).format('YYYY-MM-DD'));
+    $("#inputClientPhoneNumber").val(client.ClientPhoneNumber);
+    $("#inputClientEmail").val(client.ClientEmail);
+}
 
 $(function () {
     $("#inputClientPhoneNumber").mask("+7(999)999-99-99");

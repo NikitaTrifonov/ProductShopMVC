@@ -12,14 +12,40 @@
 
 <h2>@ViewBag.Title</h2>
 <div>
-    <p><input id="inputId" hidden /></p>
-    <p><input id="inputName" onkeyup="checkParams()" placeholder="Название" /> Название </p>
-    <p><select size="1" id="ProductCategory" name="ProductCategory"> </select> Категория</p>
-    <p><input id="inputPrice" type="number" min="0" step="0.01" placeholder="0.00" onkeyup="checkParams()" oninput="limitDecimal(this)" /> Цена</p>
+    <table>
+        <tr hidden>
+            <td>Id:</td>
+            <td><input id="inputId" hidden /></td>
+        </tr>
+        <tr>
+            <td>
+                Название
+            </td>
+            <td>
+                <input id="inputName" onkeyup="checkParams()" placeholder="Название" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Категория       
+            </td>
+            <td>
+                <select size="1" id="ProductCategory" name="ProductCategory"> </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Цена
+            </td>
+            <td>
+                <input id="inputPrice" type="number" min="0" step="0.01" placeholder="0.00" onkeyup="checkParams()" oninput="limitDecimal(this)" />
+            </td>
+        </tr>
+    </table>
 </div>
 <div>
     <div class="buttonBox">
-        <a id="submitButton" class="btnFunc" ></a>
+        <a id="submitButton" class="btnFunc"></a>
         <a class="btnFunc" href="~/Product/ProductList">К списку</a>
     </div>
     <p id="errorMessage"></p>

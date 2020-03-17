@@ -11,6 +11,7 @@ namespace ProductShopMVC.Tools.Check
     {
 
         private static string phoneNumberPattern = @"\+[7]{1}?\(?\d{3}\)?\d{3}-\d{2}-\d{2}";
+
         private static string emailPattern = @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
                 @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9]{2,17}))$";
 

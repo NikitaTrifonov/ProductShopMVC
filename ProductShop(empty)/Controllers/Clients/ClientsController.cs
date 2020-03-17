@@ -37,6 +37,19 @@ namespace ProductShop_empty_.Controllers.Clients
             ResultHandler<Object> result = new ResultHandler<object>(outError.ErrorMessage);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult EditClientView(string id)
+        {
+            Client clientForEdit = clientsServices.GetClientById(id);
+            return View("~/Views/Clients/AddEditClient.cshtml", clientForEdit);
+        }
+        [HttpPost]
+
+        public JsonResult EditClient(AddEditClient clientFromView)
+        {
+            clientsServices.EditClient(clientFromView, out DefaultError outError);
+            ResultHandler<Object> result = new ResultHandler<object>(outError.ErrorMessage);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 
 }

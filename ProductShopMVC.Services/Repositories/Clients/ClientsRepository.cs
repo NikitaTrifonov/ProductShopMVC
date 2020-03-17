@@ -32,5 +32,12 @@ namespace ProductShopMVC.Services.Repositories.Clients
         {
             return ClientsList.FirstOrDefault(client => (String.Compare(client.ClientEmail, email) == 0));
         }
+        public static void EditClient(Client changedClient)
+        {
+            Client oldClient = ClientsRepository.GetClientById(changedClient.ClientId);
+            int index = ClientsList.IndexOf(oldClient);
+            ClientsList.Remove(oldClient);
+            ClientsList.Insert(index, changedClient);
+        }
     }
 }

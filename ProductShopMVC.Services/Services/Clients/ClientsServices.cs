@@ -25,18 +25,38 @@ namespace ProductShopMVC.Services.Services.Clients
             }
             return result;
         }
+        public Client GetClientById(string id)
+        {
+            return ClientsRepository.GetClientById(id);
+        }
+
         public void AddClient(AddEditClient clientFromView, out DefaultError outError)
+        {
+            if (CheckClient(clientFromView, out outError))
+            {
+                ClientsRepository.AddClient(SetClientData(clientFromView));
+            }
+        }
+        public void EditClient(AddEditClient clientFromView, out DefaultError outError)
+        {
+            if (CheckClient(clientFromView, out outError))
+            {
+                ClientsRepository.EditClient(SetClientData(clientFromView));
+            }
+        }
+
+        private bool CheckClient(AddEditClient clientFromView, out DefaultError outError)
         {
             outError = new DefaultError();
             if (!String.IsNullOrEmpty(outError.ErrorMessage = CheckClientNull(clientFromView)))
             {
-                return;
+                return false;
             }
             if (!String.IsNullOrEmpty(outError.ErrorMessage = CheckClientData(clientFromView)))
             {
-                return;
+                return false;
             }
-            ClientsRepository.AddClient(SetClientData(clientFromView));
+            return true;
         }
 
         private Client SetClientData(AddEditClient clientFromView)
@@ -91,7 +111,7 @@ namespace ProductShopMVC.Services.Services.Clients
             {
                 return "Ошибка ввода E-mail. Клиент с таким E-mail адресом уже существет!";
             }
-                return null;
+            return null;
         }
 
         private bool checkUniqEmail(AddEditClient clientFromView)
