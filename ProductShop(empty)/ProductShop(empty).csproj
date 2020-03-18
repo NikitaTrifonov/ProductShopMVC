@@ -114,6 +114,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\45.png" />
     <Content Include="Content\Images\78.png" />
+    <Content Include="Content\Images\kelli-mcclintock-GopRYASfsOc-unsplash.jpg" />
     <Content Include="Content\ProductStyle\InfoPage.css" />
     <Content Include="Content\ProductStyle\ProductShop.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

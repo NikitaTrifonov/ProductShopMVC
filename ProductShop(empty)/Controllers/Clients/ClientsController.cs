@@ -50,6 +50,18 @@ namespace ProductShop_empty_.Controllers.Clients
             ResultHandler<Object> result = new ResultHandler<object>(outError.ErrorMessage);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
+        public JsonResult SearchClientsByLastName(string lastName)
+        {
+            ResultHandler<List<Client>> result = new ResultHandler<List<Client>>(clientsServices.SearchClientsByLastName(lastName, out DefaultError outError), outError.ErrorMessage);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult SearchClientsByEmail(string email)
+        {
+            ResultHandler<List<Client>> result = new ResultHandler<List<Client>>(clientsServices.SearchClientsByEmail(email, out DefaultError outError), outError.ErrorMessage);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 
 }

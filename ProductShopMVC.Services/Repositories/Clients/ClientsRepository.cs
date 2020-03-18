@@ -32,6 +32,12 @@ namespace ProductShopMVC.Services.Repositories.Clients
         {
             return ClientsList.FirstOrDefault(client => (String.Compare(client.ClientEmail, email) == 0));
         }
+
+        public static List<Client> SearchClientsByEmail(string email)
+        {
+            List<Client> result = ClientsList.Where(client => client.ClientEmail == email).ToList();
+            return result;
+        }
         public static void EditClient(Client changedClient)
         {
             Client oldClient = ClientsRepository.GetClientById(changedClient.ClientId);
@@ -39,5 +45,11 @@ namespace ProductShopMVC.Services.Repositories.Clients
             ClientsList.Remove(oldClient);
             ClientsList.Insert(index, changedClient);
         }
+        public static List<Client> GetClientsByLastName(string lastName)
+        {
+            List<Client> result = ClientsList.Where(client => client.ClientLastName == lastName).ToList();
+            return result;
+        }
+       
     }
 }

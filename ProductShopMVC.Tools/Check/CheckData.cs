@@ -26,7 +26,7 @@ namespace ProductShopMVC.Tools.Check
         }
         public static bool checkEmail(string inEmail)
         {
-            if (Regex.IsMatch(inEmail, emailPattern))
+            if (Regex.IsMatch(inEmail.ToLower(), emailPattern))
             {
                 return true;
             }

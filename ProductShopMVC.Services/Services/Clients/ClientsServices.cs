@@ -45,6 +45,40 @@ namespace ProductShopMVC.Services.Services.Clients
             }
         }
 
+        public List<Client> SearchClientsByLastName(string lastName, out DefaultError outError)
+        {
+            outError = new DefaultError();
+            if (String.IsNullOrWhiteSpace(lastName))
+            {
+                outError.ErrorMessage = "Ошибка ввода. Пустое значение.";
+                return new List<Client>();
+            }
+            List<Client> result = ClientsRepository.GetClientsByLastName(lastName);
+            if (!result.Any())
+            {
+                outError.ErrorMessage = "Клиентов с введенной фамилией не найдено!";
+                return new List<Client>();
+            }
+            return result;
+        }
+
+        public  List<Client> SearchClientsByEmail(string email, out DefaultError outError)
+        {
+            outError = new DefaultError();
+            if (String.IsNullOrWhiteSpace(email))
+            {
+                outError.ErrorMessage = "Ошибка ввода. Пустое значение.";
+                return new List<Client>();
+            }
+            List<Client> result = ClientsRepository.SearchClientsByEmail(email);
+            if (!result.Any())
+            {
+                outError.ErrorMessage = "Клиентов с введенным E-mail не найдено!";
+                return new List<Client>();
+            }
+            return result;
+        }
+
         private bool CheckClient(AddEditClient clientFromView, out DefaultError outError)
         {
             outError = new DefaultError();

@@ -27,3 +27,17 @@ function addClientsInTable(RequstResault) {
         $("#errorMessage").text(RequstResault.Error);
     }
 }
+
+$("#searchClientBtn").click(function () {
+    switch ($("select option:selected").val()) {
+        case "AllClients":
+            $.getJSON("GetAllClients", addClientsInTable);
+            break;
+        case "LastName":
+            $.getJSON("SearchClientsByLastName", { LastName: $("#requiredClientData").val() }, addClientsInTable);
+            break;
+        case "E-mail":
+            $.getJSON("SearchClientsByEmail", { Email: $("#requiredClientData").val() }, addClientsInTable);
+            break;
+    }
+})

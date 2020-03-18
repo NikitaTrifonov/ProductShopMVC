@@ -8,10 +8,10 @@
     <div class="searchBox">
         <label>
             Фильтр поиска:
-            <select>
-                <option value="0">Фамилия</option>
-                <option value="1">Номер телефона</option>
-                <option value="2">E-mail</option>
+            <select id="searchFilter">
+                <option value="AllClients">Все</option>
+                <option value="LastName">Фамилия</option>              
+                <option value="E-mail">E-mail</option>
             </select>
             <input type="text" id="requiredClientData" />
         </label>
@@ -32,7 +32,7 @@
         <p id="errorMessage" class="errorMessage"></p>
     </div>
     <div class="clientListBtnBox">
-        <a class="btnFunc" href="~/Clients/AddClientView">Добавить</a>
+        <a class="btnFunc" href="~/Clients/AddClientView">Добавить клиента</a>
     </div>
 </div>
 <script src="~/Scripts/ClientsScripts/ClientsList.js"></script>
