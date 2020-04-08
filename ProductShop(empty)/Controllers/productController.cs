@@ -14,6 +14,13 @@ namespace ProductShop_empty_.Controllers
     {
         private ProductServices productServices = new ProductServices();
 
+        [HttpPost]
+        public JsonResult DelProduct(string id)
+        {
+            productServices.DelProduct(id, out DefaultError outError);
+            ResultHandler<Object> result = new ResultHandler<object>(outError.ErrorMessage);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         [HttpGet]
         public ActionResult AddProductView()
         {
@@ -34,7 +41,6 @@ namespace ProductShop_empty_.Controllers
             ProductForEdit product = new ProductForEdit(productServices.GetProductById(id));
             return View("~/Views/Product/AddEditProduct.cshtml", product);
         }
-
 
         [HttpPost]
         public JsonResult EditProduct(AddEditProduct product)

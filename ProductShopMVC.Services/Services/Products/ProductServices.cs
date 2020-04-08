@@ -8,6 +8,7 @@ using ProductShopMVC.Services.Models.Products;
 using ProductShopMVC.Tools.Errors;
 using ProductShopMVC.Tools.Generate;
 using ProductShopMVC.Services.Models.Products.Types;
+using ProductShopMVC.Services.Models.Products.DbModels;
 
 
 
@@ -17,20 +18,28 @@ namespace ProductShopMVC.Services.Services.Products
     {
         public Product GetProductById(string id)
         {
-            return ProductRepository.GetProductById(id);
+            return ConverDbProductToProduct(ProductRepository.GetProductById(id));
         }
 
+        public void DelProduct(string id, out DefaultError outError)
+        {
+            outError = new DefaultError();
+            if (ProductRepository.GetProductById(id) == null)
+            {
+                outError.ErrorMessage = "Ошибка удаления! Товар отсутствует в базе данных!";
+                return;
+            }
+            ProductRepository.DelProduct(id);
+        }
         public List<Product> GetProductsByCategory(string filter, out DefaultError outError)
         {
             outError = new DefaultError();
-            ProductCategory category = CategoryConverter.RusStringToEnum(filter);
+            int category = (int)CategoryConverter.RusStringToEnum(filter);
 
-            if (category == ProductCategory.All)
-            {
-                return ProductRepository.GetAllProducts();
-            }
+            if (category == 1)
+                return GetAllProducts(out DefaultError error);
 
-            List<Product> result = ProductRepository.GetProductsByCategory(category);
+            List<Product> result = ConvertDbProductListToProductList(ProductRepository.GetProductsByCategory(category));
             if (result == null)
             {
                 outError.ErrorMessage = "Ошибка формирования результата фильтрации по категории!";
@@ -48,48 +57,43 @@ namespace ProductShopMVC.Services.Services.Products
         public List<Product> GetProductsByName(string name, out DefaultError outError)
         {
             outError = new DefaultError();
-            List<Product> result = ProductRepository.GetProductsByName(name);
-
             if (name == null)
             {
                 outError.ErrorMessage = "Ошибка ввода названия. Пустое значение!";
                 return new List<Product>();
             }
+            List<Product> result = ConvertDbProductListToProductList(ProductRepository.GetProductsByName(name));
             if (result == null || !result.Any())
             {
                 outError.ErrorMessage = "Продукт с данным название отсутствует!";
                 return new List<Product>();
             }
-            return ProductRepository.GetProductsByName(name);
+            return result;
         }
 
         public List<Product> GetAllProducts(out DefaultError outError)
         {
             outError = new DefaultError();
-            List<Product> result = ProductRepository.GetAllProducts();
+            List<Product> result = ConvertDbProductListToProductList(ProductRepository.GetAllProducts());
 
             if (result == null || !result.Any())
-            {
                 outError.ErrorMessage = "Список продуктов пуст!!!";
-            }
+
             return result;
         }
-
 
         public void AddProduct(AddEditProduct newProductFromView, out DefaultError outError)
         {
             outError = new DefaultError();
 
             if (!String.IsNullOrEmpty(outError.ErrorMessage = CheckProductNullFromView(newProductFromView)))
-            {
                 return;
-            }
-            if (!String.IsNullOrEmpty(outError.ErrorMessage = CheckProductDataFromView(newProductFromView)))
-            {
-                return;
-            }
 
-            ProductRepository.AddProduct(SetProductData(newProductFromView));
+            if (!String.IsNullOrEmpty(outError.ErrorMessage = CheckProductDataFromView(newProductFromView)))
+                return;
+
+            ProductRepository.AddProductInBD(SetProductData(newProductFromView));
+
         }
 
         public void EditProduct(AddEditProduct productFromView, out DefaultError outError)
@@ -97,56 +101,63 @@ namespace ProductShopMVC.Services.Services.Products
             outError = new DefaultError();
 
             if (!String.IsNullOrEmpty(outError.ErrorMessage = CheckProductNullFromView(productFromView)))
-            {
                 return;
-            }
+
             if (ProductRepository.GetProductById(productFromView.ProductId) == null)
             {
                 outError.ErrorMessage = "Продукт с таким Id отсутствует в базе!";
                 return;
             }
             if (!String.IsNullOrEmpty(outError.ErrorMessage = CheckProductDataFromView(productFromView)))
-            {
                 return;
-            }
 
             ProductRepository.EditProduct(SetProductData(productFromView));
         }
 
-        private Product SetProductData(AddEditProduct productFromView)
-        {
-            Product newProduct = new Product();
-            newProduct.ProductId = String.IsNullOrEmpty(productFromView.ProductId) ? GeneratorId.GenerateId() : productFromView.ProductId;
-            newProduct.ProductName = productFromView.ProductName;
-            newProduct.ProductPrice = productFromView.ProductPrice;
-            newProduct.ProductType = CategoryConverter.RusStringToEnum(productFromView.ProductCategory);
-            return newProduct;
-        }
 
+        private DbProduct SetProductData(AddEditProduct productFromView)
+        {
+            DbProduct newDbProduct = new DbProduct();
+            newDbProduct.DbProductId = String.IsNullOrEmpty(productFromView.ProductId) ? GeneratorId.GenerateId() : productFromView.ProductId;
+            newDbProduct.DbProductName = productFromView.ProductName;
+            newDbProduct.DbProductPrice = Decimal.Parse(productFromView.ProductPrice.Replace(".", ","));
+            newDbProduct.DbProductCategory = (int)CategoryConverter.RusStringToEnum(productFromView.ProductCategory);
+            return newDbProduct;
+        }
         private string CheckProductDataFromView(AddEditProduct productFromView)
         {
             decimal price;
             if (String.IsNullOrEmpty(productFromView.ProductName))
-            {
                 return "Ошибка ввода данных. Пустое значение названия продукта!";
-            }
+
             if (String.IsNullOrEmpty(productFromView.ProductPrice))
-            {
                 return "Ошибка ввода данных. Пустое значение цены продукта!";
-            }
+
             if (Decimal.TryParse(productFromView.ProductPrice, out price))
-            {
                 return "Ошибка ввода данных. Значение цены продукта не  может быть меньше или равна нулю!";
-            }
+
             return null;
         }
         private string CheckProductNullFromView(AddEditProduct productFromView)
         {
             if (productFromView == null)
-            {
                 return "Ошибка данных. Пустая форма с клиенита!";
+
+            return null;
+        }
+        private List<Product> ConvertDbProductListToProductList(List<DbProduct> dbProductList)
+        {
+            List<Product> result = new List<Product>();
+            foreach (DbProduct dbProduct in dbProductList)
+            {
+                result.Add(ConverDbProductToProduct(dbProduct));
             }
-            else return null;
+            return result;
+        }
+
+        private Product ConverDbProductToProduct(DbProduct dbProduct)
+        {
+            return new Product(dbProduct.DbProductId, dbProduct.DbProductName, dbProduct.DbProductPrice.ToString(), (ProductCategory)dbProduct.DbProductCategory);
         }
     }
 }

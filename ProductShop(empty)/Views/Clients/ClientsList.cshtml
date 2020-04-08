@@ -3,6 +3,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="delDialogWindow" id="delDialog">
+    <div class="delDialogContent">
+        <div>Удалить клиента ? </div>
+        <div class="delDialogBtnBox">
+            <a id="delDialogBtnYes" class="btnFunc">Да</a>
+            <a id="delDialogBtnNo" class="btnFunc">Нет</a>
+        </div>
+    </div>
+</div>
+<div id="mask"></div>
+
 <div>
     <h2>Список клиентов</h2>
     <div class="searchBox">
@@ -10,7 +21,7 @@
             Фильтр поиска:
             <select id="searchFilter">
                 <option value="AllClients">Все</option>
-                <option value="LastName">Фамилия</option>              
+                <option value="LastName">Фамилия</option>
                 <option value="E-mail">E-mail</option>
             </select>
             <input type="text" id="requiredClientData" />
@@ -30,6 +41,7 @@
             </tr>
         </table>
         <p id="errorMessage" class="errorMessage"></p>
+        <p id="statusMessage" class="errorMessage"></p>
     </div>
     <div class="clientListBtnBox">
         <a class="btnFunc" href="~/Clients/AddClientView">Добавить клиента</a>

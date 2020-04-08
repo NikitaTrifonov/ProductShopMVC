@@ -18,7 +18,7 @@
         $("#submitButton").text("Изменить");
         $("#inputId").val(product.ProductId);
         $("#inputName").val(product.ProductName);
-        $("#inputPrice").val(product.ProductPrice);
+        $("#inputPrice").val((product.ProductPrice).replace(/,/g,"."));
         $("#ProductCategory").val(product.ProductType).change();
         AddOrEdit("EditProduct", product);
     }
@@ -48,7 +48,8 @@ function AddOrEdit(controllerName, product) {
             if (RequestResult.IsSuccess) {
                 switch (controllerName) {
                     case "AddProduct":
-                        getStatusMessage("successAdd");
+                        getStatusMessage("successAdd");                                             
+                        $("#submitButton").toggleClass("btnFuncDisable");
                         break;
                     case "EditProduct":
                         getStatusMessage("successEdit");
@@ -85,11 +86,11 @@ function getStatusMessage(status) {
             break;
         case "failName":
             setErrorColorMessage()
-            $("#statusMessage").text("Некорректный ввод названия продукта! Название не может быть пустым. Изменения не сохранены!");
+            $("#statusMessage").text("Некорректный ввод названия продукта! Название не может быть пустым.");
             break;
         case "failPrice":
             setErrorColorMessage();
-            $("#statusMessage").text("Некорректный ввод цены продукта! Цена не может быть меньше или равна нулю. Изменения не сохранены!");
+            $("#statusMessage").text("Некорректный ввод цены продукта! Цена не может быть меньше или равна нулю.");
             break;
     }
 }

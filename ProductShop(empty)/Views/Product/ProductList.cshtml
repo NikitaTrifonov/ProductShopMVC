@@ -2,9 +2,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="delDialogWindow" id="delDialog">
+    <div class="delDialogContent">
+        <div>Удалить продукт ? </div>
+        <div class="delDialogBtnBox">
+            <a id="delDialogBtnYes" class="btnFunc">Да</a>
+            <a id="delDialogBtnNo" class="btnFunc">Нет</a>
+        </div>
+    </div>
+</div>
+<div id="mask"></div>
+
 <div>
     <h2>Список продуктов</h2>
-    <div>        
+    <div>
         <label>Имя продукта: <input type="text" id="requiredProductName" /></label>
         <input type="button" id="getProductByName" value="Поиск" />
 
@@ -18,6 +29,7 @@
         </tr>
     </table>
     <p id="errorMessage" class="errorMessage"></p>
+    <p id="statusMessage" class="errorMessage"></p>
     <div>
         <p>
             Фильтр по категории :
@@ -28,7 +40,7 @@
     <div>
         <a href="AddProductView" class="btnFunc">Добавить продукт</a>
     </div>
-
+   
 </div>
 <script src="~/Scripts/ProductScripts/ProductList.js"></script>
 

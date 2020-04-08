@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Npgsql;
 using ProductShopMVC.Services.Models.Products;
 using ProductShopMVC.Services.Models.Products.Types;
+using ProductShopMVC.Services.Models.Products.DbModels;
 
 
 
@@ -13,46 +15,125 @@ namespace ProductShopMVC.Services.Repositories.Products
 {
     public static class ProductRepository
     {
+        private static String connectionString = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=Usama667;Database=ProductDirect;";
 
-        private static List<Product> ProductsList = new List<Product>
-        {
-            new Product(Guid.NewGuid().ToString(), "Апельсин", "15.00", ProductCategory.Fruits ),
-            new Product(Guid.NewGuid().ToString(), "Лайм", "30.00",ProductCategory.Fruits ),
-            new Product(Guid.NewGuid().ToString(), "Огурец", "8.30", ProductCategory.Vegetables),
-            new Product(Guid.NewGuid().ToString(), "Малина", "250.00", ProductCategory.Berries),
-            new Product(Guid.NewGuid().ToString(), "Ананасовый сок","390.00", ProductCategory.Juices),
-            new Product(Guid.NewGuid().ToString(), "Арахис", "78.00", ProductCategory.Nuts),
-        };
+        public static void DelProduct(string id)
+        {           
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
 
-        public static List<Product> GetProductsByCategory(ProductCategory category)
+            using (var cmd = new NpgsqlCommand("DELETE FROM products " +
+                                          "WHERE productId = @id", connection))
+            {
+                cmd.Parameters.AddWithValue("id", id);
+                cmd.ExecuteReader();
+            }
+        }
+
+        public static List<DbProduct> GetProductsByCategory(int category)
         {
-            List<Product> result = ProductsList.Where(product => product.ProductType == category).ToList();
+            List<DbProduct> result = new List<DbProduct>();
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            using (var cmd = new NpgsqlCommand("SELECT * FROM products " +
+                                               "WHERE productcategory = @category", connection))
+            {
+                cmd.Parameters.AddWithValue("category", category);
+                using (var reader = cmd.ExecuteReader())
+                    while (reader.Read())
+                    {
+                        result.Add(setDbProduct(reader));
+                    }
+            }
             return result;
         }
-        public static Product GetProductById(string id)
+        public static DbProduct GetProductById(string id)
         {
-            return ProductsList.FirstOrDefault(product => product.ProductId == id);
+            DbProduct result = new DbProduct();
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+            using (var cmd = new NpgsqlCommand("SELECT * FROM products " +
+                                               "WHERE productid = @productId", connection))
+            {
+                cmd.Parameters.AddWithValue("productid", id);
+                using (var reader = cmd.ExecuteReader())
+                    while (reader.Read())
+                    {
+                        result = setDbProduct(reader);
+                    }
+            }
+            return result;
         }
-        public static List<Product> GetProductsByName(string name)
+        public static List<DbProduct> GetProductsByName(string name)
         {
-            List<Product> resault = ProductsList.Where(product => product.ProductName.ToLower() == name.ToLower()).ToList();
-            return resault;
+            List<DbProduct> result = new List<DbProduct>();
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            using (var cmd = new NpgsqlCommand("SELECT * FROM products " +
+                                               "WHERE productname ILIKE @name", connection))
+            {
+                cmd.Parameters.AddWithValue("name", name);
+                using (var reader = cmd.ExecuteReader())
+                    while (reader.Read())
+                    {
+                        result.Add(setDbProduct(reader));
+                    }
+            }
+            return result;
         }
 
-        public static List<Product> GetAllProducts()
+        public static List<DbProduct> GetAllProducts()
         {
-            return ProductsList;
+            List<DbProduct> result = new List<DbProduct>();
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+            using (var cmd = new NpgsqlCommand("SELECT * FROM products", connection))
+            using (var reader = cmd.ExecuteReader())
+                while (reader.Read())
+                {
+                    result.Add(setDbProduct(reader));
+                }
+            return result;
         }
-        public static void AddProduct(Product newProduct)
+
+        public static void EditProduct(DbProduct changedProduct)
         {
-            ProductsList.Add(newProduct);
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            using (var cmd = new NpgsqlCommand("UPDATE products " +
+                                               "SET productname = @name, productprice = @price, productcategory = @category " +
+                                               "WHERE productid = @id", connection))
+            {
+                cmd.Parameters.AddWithValue("name", changedProduct.DbProductName);
+                cmd.Parameters.AddWithValue("price", changedProduct.DbProductPrice);
+                cmd.Parameters.AddWithValue("category", changedProduct.DbProductCategory);
+                cmd.Parameters.AddWithValue("id", changedProduct.DbProductId);
+                cmd.ExecuteNonQuery();
+            }
         }
-        public static void EditProduct(Product changedProduct)
+
+        public static void AddProductInBD(DbProduct newDbProduct)
         {
-            Product oldProduct = ProductRepository.GetProductById(changedProduct.ProductId);
-            int indexProduct = ProductsList.IndexOf(oldProduct);
-            ProductsList.Remove(oldProduct);
-            ProductsList.Insert(indexProduct, changedProduct);
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            using (var cmd = new NpgsqlCommand("INSERT INTO products (productid, productname, productprice, productcategory) " +
+                                               "VALUES (@productid, @productname, @productprice, @productcategory)", connection))
+            {
+                cmd.Parameters.AddWithValue("productid", newDbProduct.DbProductId);
+                cmd.Parameters.AddWithValue("productname", newDbProduct.DbProductName);
+                cmd.Parameters.AddWithValue("productprice", newDbProduct.DbProductPrice);
+                cmd.Parameters.AddWithValue("productcategory", newDbProduct.DbProductCategory);
+                cmd.ExecuteNonQuery();
+            }
+
+        }
+        private static DbProduct setDbProduct(NpgsqlDataReader reader)
+        {
+            return new DbProduct(reader.GetString(0), reader.GetString(1), reader.GetDecimal(2), reader.GetInt32(3));
         }
     }
 }

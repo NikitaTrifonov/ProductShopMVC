@@ -3,53 +3,158 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Npgsql;
 using ProductShopMVC.Services.Models.Clients;
+using ProductShopMVC.Services.Models.Clients.DbModels;
+
 
 namespace ProductShopMVC.Services.Repositories.Clients
 {
     public static class ClientsRepository
     {
-        private static List<Client> ClientsList = new List<Client>()
-        {
-            new Client(Guid.NewGuid().ToString(),"Иванов","Петр","Андреевич", new DateTime(1990,1,12),"+7(916)370-15-41","ivanov1990@gmail.com"),
-            new Client(Guid.NewGuid().ToString(),"Шумова","Елена","Александровна", new DateTime(1984,10,8),"+7(985)171-47-61","shum111@gmail.com"),
-            new Client(Guid.NewGuid().ToString(),"Клюев","Егор","Павлович", new DateTime(1992,5,29),"+7(926)111-56-96","CluevEP1992@gmail.com")
-        };
 
-        public static List<Client> GetAllClients()
-        {
-            return ClientsList;
-        }
-        public static void AddClient(Client newClient)
-        {
-            ClientsList.Add(newClient);
-        }
-        public static Client GetClientById(string id)
-        {
-            return ClientsList.FirstOrDefault(client => client.ClientId == id);
-        }
-        public static Client GetClientByEmail(string email)
-        {
-            return ClientsList.FirstOrDefault(client => (String.Compare(client.ClientEmail, email) == 0));
-        }
+        private static String connectionString = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=Usama667;Database=ProductDirect;";
 
-        public static List<Client> SearchClientsByEmail(string email)
+        public static List<DbClient> GetAllClients()
         {
-            List<Client> result = ClientsList.Where(client => client.ClientEmail == email).ToList();
+            List<DbClient> result = new List<DbClient>();
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            using (var cmd = new NpgsqlCommand("SELECT * FROM clients", connection))
+            using (var reader = cmd.ExecuteReader())
+                while (reader.Read())
+                {
+                    result.Add(setBdProduct(reader));
+                }
             return result;
         }
-        public static void EditClient(Client changedClient)
+        public static void DelClient(string clientId)
         {
-            Client oldClient = ClientsRepository.GetClientById(changedClient.ClientId);
-            int index = ClientsList.IndexOf(oldClient);
-            ClientsList.Remove(oldClient);
-            ClientsList.Insert(index, changedClient);
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+            using (var cmd = new NpgsqlCommand("DELETE FROM clients " +
+                                              "WHERE clientId = @id", connection))
+            {
+                cmd.Parameters.AddWithValue("id", clientId);
+                cmd.ExecuteNonQuery();
+            }
         }
-        public static List<Client> GetClientsByLastName(string lastName)
+
+        public static void AddClient(DbClient newClient)
         {
-            List<Client> result = ClientsList.Where(client => client.ClientLastName == lastName).ToList();
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+            using (var cmd = new NpgsqlCommand("INSERT INTO clients (clientId, clientLastName, clientFirstName, clientMiddleName, clientBirthDay, clientPhoneNumber, clientEmail) " +
+                                               "VALUES(@id, @lastName, @firstName, @middleName, @birthDay, @phoneNumber, @email)", connection))
+            {
+                cmd.Parameters.AddWithValue("id", newClient.DbClientId);
+                cmd.Parameters.AddWithValue("lastName", newClient.DbClientLastName);
+                cmd.Parameters.AddWithValue("firstName", newClient.DbClientFirstName);
+                cmd.Parameters.AddWithValue("middleName", newClient.DbClientMiddleName);
+                cmd.Parameters.AddWithValue("birthDay", newClient.DbClientBirthday);
+                cmd.Parameters.AddWithValue("phoneNumber", newClient.DbClientPhoneNumber);
+                cmd.Parameters.AddWithValue("email", newClient.DbClientEmail);
+                cmd.ExecuteNonQuery();
+
+            }
+        }
+        public static void EditClient(DbClient changedClient)
+        {
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+            using (var cmd = new NpgsqlCommand("UPDATE clients " +
+                                               "SET clientLastName = @lastName, clientFirstName = @firstName, clientMiddleName = @middleName, " +
+                                               "clientBirthDay = @birthDay, clientPhoneNumber = @phoneNumber, clientEmail = @email " +
+                                               "WHERE clientId = @id", connection))
+            {
+                cmd.Parameters.AddWithValue("lastName", changedClient.DbClientLastName);
+                cmd.Parameters.AddWithValue("firstName", changedClient.DbClientFirstName);
+                cmd.Parameters.AddWithValue("middleName", changedClient.DbClientMiddleName);
+                cmd.Parameters.AddWithValue("birthDay", changedClient.DbClientBirthday);
+                cmd.Parameters.AddWithValue("phoneNumber", changedClient.DbClientPhoneNumber);
+                cmd.Parameters.AddWithValue("email", changedClient.DbClientEmail);
+                cmd.Parameters.AddWithValue("id", changedClient.DbClientId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static DbClient GetClientById(string id)
+        {
+            DbClient result = new DbClient();
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+            using (var cmd = new NpgsqlCommand("SELECT * FROM clients " +
+                                               "WHERE clientId = @id ", connection))
+            {
+                cmd.Parameters.AddWithValue("id", id);
+                using (var reader = cmd.ExecuteReader())
+                    while (reader.Read())
+                    {
+                        result = setBdProduct(reader);
+                    }
+            }
             return result;
         }
-       
+        public static DbClient GetClientByEmail(string email)
+        {
+            DbClient result = new DbClient();
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+            using (var cmd = new NpgsqlCommand("SELECT * FROM clients " +
+                                               "WHERE clientEmail = @email ", connection))
+            {
+                cmd.Parameters.AddWithValue("email", email);
+                using (var reader = cmd.ExecuteReader())
+                    while (reader.Read())
+                    {
+                        result = setBdProduct(reader);
+                    }
+            }
+            return result;
+        }
+
+        public static List<DbClient> SearchClientsByEmail(string email)
+        {
+            List<DbClient> result = new List<DbClient>();
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            using (var cmd = new NpgsqlCommand("SELECT * FROM clients " +
+                                               "WHERE clientEmail ILIKE @email", connection))
+            {
+                cmd.Parameters.AddWithValue("email", email);
+                using (var reader = cmd.ExecuteReader())
+                    while (reader.Read())
+                    {
+                        result.Add(setBdProduct(reader));
+                    }
+            }
+            return result;
+        }
+
+        public static List<DbClient> GetClientsByLastName(string lastName)
+        {
+            List<DbClient> result = new List<DbClient>();
+            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            using (var cmd = new NpgsqlCommand("SELECT * FROM clients " +
+                                               "WHERE clientLastName ILIKE @lastName", connection))
+            {
+                cmd.Parameters.AddWithValue("lastName", lastName);
+                using (var reader = cmd.ExecuteReader())
+                    while (reader.Read())
+                    {
+                        result.Add(setBdProduct(reader));
+                    }
+            }
+            return result;
+        }
+
+        private static DbClient setBdProduct(NpgsqlDataReader reader)
+        {
+            return new DbClient(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6));
+        }
     }
 }

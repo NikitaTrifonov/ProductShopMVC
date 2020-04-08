@@ -54,9 +54,11 @@ function AddOrEditClient(controllerName, client) {
                 switch (controllerName) {
                     case "AddClient":
                         setStatusMessage("successAdd");
+                        $("#submitBtnClient").toggleClass("btnFuncDisable");
                         break;
                     case "EditClient":
                         setStatusMessage("successEdit")
+
                         break;
                 }
             }
