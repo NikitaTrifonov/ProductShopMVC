@@ -13,13 +13,15 @@ namespace ProductShopMVC.Services.Models.Products
         public string ProductPrice { get; set; }
         public ProductCategory ProductType { get; set; }
         public string CategoryString { get { return CategoryConverter.EnumToRusString(this.ProductType); }}
+        public string ProductImageRes { get; set; }
 
-        public Product(string id, string name, string price, ProductCategory type)
+        public Product(string id, string name, string price, ProductCategory type, string imageRes)
         {
             ProductId = id;
             ProductName = name;
             ProductPrice = price;
             ProductType = type;
+            ProductImageRes = imageRes;
         }
         public Product() { }
     }

@@ -1,19 +1,23 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ProductShopMVC.Services.Services.Products;
+using ProductShopMVC.Services.Services.Files;
 using ProductShopMVC.Services.Models.Products;
 using ProductShopMVC.Tools.Response;
 using ProductShopMVC.Tools.Errors;
 using ProductShop_empty_.Models.Products;
+using ProductShopMVC.Tools.Generate;
+
 namespace ProductShop_empty_.Controllers
 {
+
     public class ProductController : Controller
     {
         private ProductServices productServices = new ProductServices();
-
         [HttpPost]
         public JsonResult DelProduct(string id)
         {
@@ -78,12 +82,24 @@ namespace ProductShop_empty_.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-
         [HttpGet]
         public JsonResult GetProductByName(string name)
         {
             ResultHandler<List<Product>> result = new ResultHandler<List<Product>>(productServices.GetProductsByName(name, out DefaultError outError), outError.ErrorMessage);
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult UploadImg()
+        {
+            ResultHandler<String> result = new ResultHandler<string>(FileService.UploadProductImg(Request, out DefaultError outError), outError.ErrorMessage);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetImg(string id)
+        {          
+            return base.File(FileService.GetProductImg(id), "image/jpeg");
         }
     }
 

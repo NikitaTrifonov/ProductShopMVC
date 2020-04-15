@@ -12,13 +12,15 @@ namespace ProductShopMVC.Services.Models.Products.DbModels
         public string DbProductName { get; set; }
         public decimal DbProductPrice { get; set; }
         public int DbProductCategory { get; set; }
+        public string DbImageRes { get; set; }
 
-        public DbProduct(string dbProductId, string dbProductName, decimal dbProductPrice, int dbProductType)
+        public DbProduct(string dbProductId, string dbProductName, decimal dbProductPrice, int dbProductType, string dbImageRes)
         {
             DbProductId = dbProductId;
             DbProductName = dbProductName;
             DbProductPrice = dbProductPrice;
             DbProductCategory = dbProductType;
+            DbImageRes = dbImageRes;
         }
 
         public DbProduct()

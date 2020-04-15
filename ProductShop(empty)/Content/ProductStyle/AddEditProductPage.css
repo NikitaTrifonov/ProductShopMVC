@@ -1,0 +1,20 @@
+﻿.addEditProductImgBox {
+   
+    margin: 20px;
+    height : auto;
+    width: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.addEditProductImg {
+    width: 180px;
+    height: 100%;
+}
+
+.btnBox {
+    margin-top: 10px;
+    width: auto;
+    display: flex;
+    justify-content: space-around;
+}

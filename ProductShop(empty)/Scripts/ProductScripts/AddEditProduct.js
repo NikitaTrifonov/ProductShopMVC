@@ -6,19 +6,21 @@
             ProductId: "",
             ProductName: "",
             ProductPrice: "",
-            ProductCategory: ""
-        }
+            ProductCategory: "",
+            ProductImageRes: ""
+        }       
         addProductCategory(category);
         $("#submitButton").text("Добавить");
         $("#submitButton").attr('disabled', 'disabled');
         AddOrEdit("AddProduct", product);
     }
     else {
+        getImg(product.ProductImageRes);
         addProductCategory(category);
         $("#submitButton").text("Изменить");
         $("#inputId").val(product.ProductId);
         $("#inputName").val(product.ProductName);
-        $("#inputPrice").val((product.ProductPrice).replace(/,/g,"."));
+        $("#inputPrice").val((product.ProductPrice).replace(/,/g, "."));
         $("#ProductCategory").val(product.ProductType).change();
         AddOrEdit("EditProduct", product);
     }
@@ -35,6 +37,7 @@ function AddOrEdit(controllerName, product) {
         product.ProductName = $("#inputName").val();
         product.ProductPrice = Number.parseFloat($("#inputPrice").val()).toFixed(2);
         product.ProductCategory = $("select option:selected").text();
+        product.ProductImageRes = $(".addEditProductImg").attr("src").replace('GetImg?id=','');
         if (!$.trim(product.ProductName)) {
             getStatusMessage('failName');
             return;
@@ -48,7 +51,7 @@ function AddOrEdit(controllerName, product) {
             if (RequestResult.IsSuccess) {
                 switch (controllerName) {
                     case "AddProduct":
-                        getStatusMessage("successAdd");                                             
+                        getStatusMessage("successAdd");
                         $("#submitButton").toggleClass("btnFuncDisable");
                         break;
                     case "EditProduct":
@@ -66,6 +69,46 @@ function AddOrEdit(controllerName, product) {
 $(function () {
     init()
 });
+
+$('#uploadSubmit').on('click', function (e) {
+    e.preventDefault();
+    var files = document.getElementById('uploadFile').files;
+    if (files.length > 0) {
+        if (window.FormData !== undefined) {
+            var data = new FormData();
+            for (var x = 0; x < files.length; x++) {
+                data.append("file" + x, files[x]);
+            }
+            $.ajax({
+                type: "POST",
+                url: "UploadImg",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: successUploadImg,
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+        } else {
+            alert("Браузер не поддерживает загрузку файлов HTML5!");
+        }
+    }
+});
+
+function successUploadImg(RequstResult) {
+    if (RequstResult.IsSuccess) {       
+        getImg(RequstResult.Data);
+    }
+    else {
+        $("#errorMessage").show();
+        $("#errorMessage").text(RequstResult.Error);
+    }
+}
+
+function getImg(imgRes) {
+    $(".addEditProductImg").attr("src", `GetImg?id=${imgRes}`);    
+}
 
 function setErrorColorMessage() {
     $("#statusMessage").removeAttr('class');
@@ -109,3 +152,4 @@ function limitDecimal(e) {
         e.value = e.value.substring(0, e.value.indexOf(".") + 3);
     }
 }
+

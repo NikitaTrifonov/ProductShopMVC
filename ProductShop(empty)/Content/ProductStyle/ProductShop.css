@@ -141,17 +141,23 @@ h1, h2, h3, h4, h5, h6 {
     pointer-events: none;
 }
 
-table img {
+.btnDeleteImg, .btnEditImg {
     height: 25px;
     width: 25px;
     border: none;
 }
 
-    table img:active {
+    .btnDeleteImg, .btnEditImg:active {
         transform: scale(0.90);
     }
+#productsTable{
+    background-color: #fff;
+}
 
-
+.productImg {
+    width: 120px;
+    height: 80px;
+}
 /*Модальное окно подтверждения удаления*/
 .delDialogWindow {
     position: absolute;

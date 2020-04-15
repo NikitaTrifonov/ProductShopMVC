@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = Model.Data == null ? "Добавление продукта" : "Редактирование продукта";
 }
+<link href="@Url.Content("~/Content/ProductStyle/AddEditProductPage.css")" rel="stylesheet" type="text/css" />
 
 @section scripts{
     <script>
@@ -12,10 +13,21 @@
 
 <h2>@ViewBag.Title</h2>
 <div>
-    <table>
+    <table class="addEditProductTable">
         <tr hidden>
             <td>Id:</td>
             <td><input id="inputId" hidden /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="addEditProductImgBox">
+                    <img class="addEditProductImg"/>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="file" name="upload" id="uploadFile" /></td>
+            <td> <button id="uploadSubmit">Загрузить</button></td>
         </tr>
         <tr>
             <td>
@@ -27,7 +39,7 @@
         </tr>
         <tr>
             <td>
-                Категория       
+                Категория
             </td>
             <td>
                 <select size="1" id="ProductCategory" name="ProductCategory"> </select>
@@ -41,13 +53,18 @@
                 <input id="inputPrice" type="number" min="0" step="0.01" placeholder="0.00" onkeyup="checkParams()" oninput="limitDecimal(this)" />
             </td>
         </tr>
+        <tr>
+            <td colspan="2">
+                <div class="btnBox">
+                    <a id="submitButton" class="btnFunc"></a>
+                    <a class="btnFunc" href="~/Product/ProductList">К списку</a>
+                </div>
+            </td>
+        </tr>
     </table>
 </div>
 <div>
-    <div class="buttonBox">
-        <a id="submitButton" class="btnFunc"></a>
-        <a class="btnFunc" href="~/Product/ProductList">К списку</a>
-    </div>
+
     <p id="errorMessage"></p>
     <p id="statusMessage"></p>
 </div>

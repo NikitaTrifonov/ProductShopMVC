@@ -14,14 +14,14 @@ $("#ProductCategory").change(function () {
 })
 
 $("#productsTable").click(function (e) {
-    if (e.target.classList.contains("btnDeleteImg")) {        
+    if (e.target.classList.contains("btnDeleteImg")) {
         var productId = e.target.dataset.productId;
         showDelWindow();
         $("#delDialogBtnNo").click(hideDelWindow);
         $("#mask").click(hideDelWindow);
         $("#delDialogBtnYes").click(function () {
-            $.post("DelProduct", { Id: productId }, delSuccess);          
-        })       
+            $.post("DelProduct", { Id: productId }, delSuccess);
+        })
     }
 })
 
@@ -51,6 +51,7 @@ function addContentInTable(RequestResult) {
         for (var i = 0; i < RequestResult.Data.length; i++) {
             tr = $('<tr class ="trContent">');
             tr.append(`<td>${(i + 1)}</td>`);
+            tr.append(`<td><img class ='productImg' src='GetImg?id=${RequestResult.Data[i].ProductImageRes}'></td>`);
             tr.append(`<td>${RequestResult.Data[i].ProductName}</td>`);
             tr.append(`<td>${RequestResult.Data[i].CategoryString}</td>`)
             tr.append(`<td>${RequestResult.Data[i].ProductPrice}</td>`);
@@ -59,9 +60,8 @@ function addContentInTable(RequestResult) {
             $('#productsTable').append(tr);
         }
     }
-    else {
-        hideDataTable();
-    }
+    else 
+        hideDataTable(RequestResult);    
 }
 
 function delSuccess(RequstResult) {
@@ -81,7 +81,7 @@ function showDataTable() {
     $("tr.trContent").remove();
 }
 
-function hideDataTable() {
+function hideDataTable(RequestResult) {
     $("#productsTable").hide();
     $("#errorMessage").show();
     $("#errorMessage").text(RequestResult.Error);

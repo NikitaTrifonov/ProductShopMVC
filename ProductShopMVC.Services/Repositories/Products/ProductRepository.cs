@@ -104,13 +104,14 @@ namespace ProductShopMVC.Services.Repositories.Products
             connection.Open();
 
             using (var cmd = new NpgsqlCommand("UPDATE products " +
-                                               "SET productname = @name, productprice = @price, productcategory = @category " +
+                                               "SET productname = @name, productprice = @price, productcategory = @category, imageRes = @res " +
                                                "WHERE productid = @id", connection))
             {
                 cmd.Parameters.AddWithValue("name", changedProduct.DbProductName);
                 cmd.Parameters.AddWithValue("price", changedProduct.DbProductPrice);
                 cmd.Parameters.AddWithValue("category", changedProduct.DbProductCategory);
-                cmd.Parameters.AddWithValue("id", changedProduct.DbProductId);
+                cmd.Parameters.AddWithValue("res", changedProduct.DbImageRes);
+                cmd.Parameters.AddWithValue("id", changedProduct.DbProductId);                
                 cmd.ExecuteNonQuery();
             }
         }
@@ -120,20 +121,21 @@ namespace ProductShopMVC.Services.Repositories.Products
             NpgsqlConnection connection = new NpgsqlConnection(connectionString);
             connection.Open();
 
-            using (var cmd = new NpgsqlCommand("INSERT INTO products (productid, productname, productprice, productcategory) " +
-                                               "VALUES (@productid, @productname, @productprice, @productcategory)", connection))
+            using (var cmd = new NpgsqlCommand("INSERT INTO products (productid, productname, productprice, productcategory, imageRes) " +
+                                               "VALUES (@productid, @productname, @productprice, @productcategory, @imageRes)", connection))
             {
                 cmd.Parameters.AddWithValue("productid", newDbProduct.DbProductId);
                 cmd.Parameters.AddWithValue("productname", newDbProduct.DbProductName);
                 cmd.Parameters.AddWithValue("productprice", newDbProduct.DbProductPrice);
                 cmd.Parameters.AddWithValue("productcategory", newDbProduct.DbProductCategory);
+                cmd.Parameters.AddWithValue("imageRes", newDbProduct.DbImageRes);
                 cmd.ExecuteNonQuery();
             }
 
         }
         private static DbProduct setDbProduct(NpgsqlDataReader reader)
         {
-            return new DbProduct(reader.GetString(0), reader.GetString(1), reader.GetDecimal(2), reader.GetInt32(3));
+            return new DbProduct(reader.GetString(0), reader.GetString(1), reader.GetDecimal(2), reader.GetInt32(3), reader.GetString(4));
         }
     }
 }

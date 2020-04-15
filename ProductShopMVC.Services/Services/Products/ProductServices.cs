@@ -122,6 +122,7 @@ namespace ProductShopMVC.Services.Services.Products
             newDbProduct.DbProductName = productFromView.ProductName;
             newDbProduct.DbProductPrice = Decimal.Parse(productFromView.ProductPrice.Replace(".", ","));
             newDbProduct.DbProductCategory = (int)CategoryConverter.RusStringToEnum(productFromView.ProductCategory);
+            newDbProduct.DbImageRes = productFromView.ProductImageRes; 
             return newDbProduct;
         }
         private string CheckProductDataFromView(AddEditProduct productFromView)
@@ -157,7 +158,7 @@ namespace ProductShopMVC.Services.Services.Products
 
         private Product ConverDbProductToProduct(DbProduct dbProduct)
         {
-            return new Product(dbProduct.DbProductId, dbProduct.DbProductName, dbProduct.DbProductPrice.ToString(), (ProductCategory)dbProduct.DbProductCategory);
+            return new Product(dbProduct.DbProductId, dbProduct.DbProductName, dbProduct.DbProductPrice.ToString(), (ProductCategory)dbProduct.DbProductCategory, dbProduct.DbImageRes);
         }
     }
 }
