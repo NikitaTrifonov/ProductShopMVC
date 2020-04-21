@@ -12,17 +12,17 @@ namespace ProductShopMVC.Services.Services.Files
 {
     public static class FileService
     {
-        public static string UploadProductImg(HttpRequestBase Requst, out DefaultError outError)
+        public static string UploadImg(HttpRequestBase Requst, string modelType, out DefaultError outError)
         {
             outError = new DefaultError();
-            string resultImageRes = "Missing Images";
+            string resultImageRes = "";
 
             foreach (string file in Requst.Files)
             {
                 var upload = Requst.Files[file];
                 if (upload != null)
                 {
-                    string fileName = "product" + "_" + GeneratorId.GenerateId() + ".jpg";   /*Path.GetFileName(upload.FileName) Если нужно имя файла*/
+                    string fileName = modelType + "_" + GeneratorId.GenerateId() + ".jpg";   /*Path.GetFileName(upload.FileName) Если нужно имя файла*/
                     upload.SaveAs(HttpContext.Current.Server.MapPath("~/Files/" + fileName));
                     resultImageRes = fileName;
                 }
@@ -35,11 +35,14 @@ namespace ProductShopMVC.Services.Services.Files
             return resultImageRes;
         }
 
-        public static string GetProductImg(string productImgRes)
+        public static string GetImgPath(string imgRes)
         {
             var dir = HttpContext.Current.Server.MapPath("/Files");
-            var path = Path.Combine(dir, productImgRes);
-            return path;
+            var path = Path.Combine(dir, imgRes);
+            if (File.Exists(path))
+                return path;
+            else
+                return Path.Combine(dir, "defaultImg.png");
         }
     }
 }

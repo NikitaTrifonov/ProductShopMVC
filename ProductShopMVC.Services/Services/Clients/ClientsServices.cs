@@ -143,13 +143,13 @@ namespace ProductShopMVC.Services.Services.Clients
             if (!CheckData.checkEmail(clientFromView.ClientEmail))
                 return "Ошибка ввода E-mail. Неправильная форма записи (server)";
 
-            if (!checkUniqEmail(clientFromView))
+            if (!СheckUniqEmail(clientFromView))
                 return "Ошибка ввода E-mail. Клиент с таким E-mail адресом уже существет!";
 
             return null;
         }
 
-        private bool checkUniqEmail(AddEditClient clientFromView)
+        private bool СheckUniqEmail(AddEditClient clientFromView)
         {
             if (!String.IsNullOrEmpty(clientFromView.ClientId))
             {

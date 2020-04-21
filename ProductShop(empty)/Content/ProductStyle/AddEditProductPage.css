@@ -1,15 +1,25 @@
 ﻿.addEditProductImgBox {
-   
+    position: relative;
     margin: 20px;
-    height : auto;
-    width: auto;
+    height: 220px;
+    width: 440px;
     display: flex;
     justify-content: center;
+    background-color: #ffffff;
+    border: 2px solid #ffd800;
 }
 
-.addEditProductImg {
-    width: 180px;
-    height: 100%;
+.imgSize {
+    width: 160px;
+    height: 130px;
+}
+.imgPosition {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+.addEditProductImg {  
+   
 }
 
 .btnBox {

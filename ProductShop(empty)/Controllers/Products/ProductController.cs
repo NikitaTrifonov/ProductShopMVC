@@ -10,11 +10,9 @@ using ProductShopMVC.Services.Models.Products;
 using ProductShopMVC.Tools.Response;
 using ProductShopMVC.Tools.Errors;
 using ProductShop_empty_.Models.Products;
-using ProductShopMVC.Tools.Generate;
 
-namespace ProductShop_empty_.Controllers
+namespace ProductShop_empty_.Controllers.Products
 {
-
     public class ProductController : Controller
     {
         private ProductServices productServices = new ProductServices();
@@ -92,14 +90,14 @@ namespace ProductShop_empty_.Controllers
         [HttpPost]
         public JsonResult UploadImg()
         {
-            ResultHandler<String> result = new ResultHandler<string>(FileService.UploadProductImg(Request, out DefaultError outError), outError.ErrorMessage);
+            ResultHandler<String> result = new ResultHandler<string>(FileService.UploadImg(Request, "product", out DefaultError outError), outError.ErrorMessage);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult GetImg(string id)
-        {          
-            return base.File(FileService.GetProductImg(id), "image/jpeg");
+        {
+            return base.File(FileService.GetImgPath(id), "image/jpeg");
         }
     }
 

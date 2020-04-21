@@ -32,7 +32,7 @@ function addClientsInTable(RequstResault) {
             tr.append(`<td>${RequstResault.Data[i].ClientBirthdayString}</td>`);
             tr.append(`<td>${RequstResault.Data[i].ClientPhoneNumber}</td>`);
             tr.append(`<td>${RequstResault.Data[i].ClientEmail}</td>`);
-            tr.append(`<td><a href ='EditClientView?id=${RequstResault.Data[i].ClientId}'><img class ='btnEditDeleteImg' src='../Content/Images/btnEdit.png'/></a></td> `);
+            tr.append(`<td><a href ='EditClientView?id=${RequstResault.Data[i].ClientId}'><img class ='btnEditImg' src='../Content/Images/btnEdit.png'/></a></td> `);
             tr.append(`<td><a><img class ='btnDeleteImg' src='../Content/Images/btnDelete.png' data-client-id = '${RequstResault.Data[i].ClientId}'/></a></td >`);
             $('#clientsTable').append(tr);
         }

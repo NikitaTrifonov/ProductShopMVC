@@ -152,6 +152,7 @@
     <Content Include="Content\ProductStyle\AddEditProductPage.css" />
     <Content Include="Content\ProductStyle\InfoPage.css" />
     <Content Include="Content\ProductStyle\ProductShop.css" />
+    <Content Include="Files\defaultImg.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -198,7 +199,7 @@
     <Compile Include="Controllers\Clients\ClientsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfoController.cs" />
-    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\Products\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -228,7 +229,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProductShopMVC.Services\ProductShopMVC.Services.csproj">

@@ -7,17 +7,19 @@
             ProductName: "",
             ProductPrice: "",
             ProductCategory: "",
-            ProductImageRes: ""
-        }       
+            ProductImageRes: "defaultImg.png"
+        }
+        hideDelImgBtn();
+        getImg(product.ProductImageRes);
         addProductCategory(category);
-        $("#submitButton").text("Добавить");
         $("#submitButton").attr('disabled', 'disabled');
         AddOrEdit("AddProduct", product);
     }
     else {
+        showDelImglBtn();
         getImg(product.ProductImageRes);
         addProductCategory(category);
-        $("#submitButton").text("Изменить");
+        $("#File-upload-button").text("Изменить");
         $("#inputId").val(product.ProductId);
         $("#inputName").val(product.ProductName);
         $("#inputPrice").val((product.ProductPrice).replace(/,/g, "."));
@@ -26,88 +28,49 @@
     }
 }
 
+$(function () {
+    init()
+});
+
 function addProductCategory(category) {
     for (var i = 1; i < category.ProductCategory.length; i++) {
         $("#ProductCategory").append("<option value='" + (i + 1) + "'>" + category.ProductCategory[i] + "</option>");
     }
 }
 
-function AddOrEdit(controllerName, product) {
-    $("#submitButton").click(function () {
-        product.ProductName = $("#inputName").val();
-        product.ProductPrice = Number.parseFloat($("#inputPrice").val()).toFixed(2);
-        product.ProductCategory = $("select option:selected").text();
-        product.ProductImageRes = $(".addEditProductImg").attr("src").replace('GetImg?id=','');
-        if (!$.trim(product.ProductName)) {
-            getStatusMessage('failName');
-            return;
-        }
-        if ($("#inputPrice").val() <= 0 || !$("#inputPrice").val()) {
-            getStatusMessage("failPrice");
-            return;
-        }
-
-        $.post(controllerName, product, function (RequestResult) {
-            if (RequestResult.IsSuccess) {
-                switch (controllerName) {
-                    case "AddProduct":
-                        getStatusMessage("successAdd");
-                        $("#submitButton").toggleClass("btnFuncDisable");
-                        break;
-                    case "EditProduct":
-                        getStatusMessage("successEdit");
-                        break;
-                }
-            }
-            else {
-                setErrorColorMessage();
-                $("#statusMessage").text(RequestResult.Error);
-            }
-        });
-    });
-}
-$(function () {
-    init()
-});
-
-$('#uploadSubmit').on('click', function (e) {
-    e.preventDefault();
-    var files = document.getElementById('uploadFile').files;
-    if (files.length > 0) {
-        if (window.FormData !== undefined) {
-            var data = new FormData();
-            for (var x = 0; x < files.length; x++) {
-                data.append("file" + x, files[x]);
-            }
-            $.ajax({
-                type: "POST",
-                url: "UploadImg",
-                contentType: false,
-                processData: false,
-                data: data,
-                success: successUploadImg,
-                error: function (xhr, status, p3) {
-                    alert(xhr.responseText);
-                }
-            });
-        } else {
-            alert("Браузер не поддерживает загрузку файлов HTML5!");
-        }
+document.querySelector("#uploadFile").addEventListener("change", function () {
+    if (this.files[0]) {
+        let fr = new FileReader();
+        fr.addEventListener("load", function () {
+            $(".addEditProductImg").attr("src", `${fr.result}`);
+        }, false);
+        fr.readAsDataURL(this.files[0]);
+        showDelImglBtn();
     }
 });
 
-function successUploadImg(RequstResult) {
-    if (RequstResult.IsSuccess) {       
-        getImg(RequstResult.Data);
+$("#delImgBtn").click(function () {
+    $("#uploadFile").val("");
+    let defaultRes = "defaultImg.png";
+    getImg(defaultRes);
+    hideDelImgBtn();
+})
+
+function checkParams() {
+    if ($("#inputName").val().length != 0 && $("#inputPrice").val().length != 0) {
+        $("#submitButton").removeAttr('disabled');
     }
     else {
-        $("#errorMessage").show();
-        $("#errorMessage").text(RequstResult.Error);
+        $("#submitButton").attr('disabled', 'disabled');
     }
 }
 
-function getImg(imgRes) {
-    $(".addEditProductImg").attr("src", `GetImg?id=${imgRes}`);    
+function showDelImglBtn() {
+    $("#delImgBtn").show();
+}
+
+function hideDelImgBtn() {
+    $("#delImgBtn").hide();
 }
 
 function setErrorColorMessage() {
@@ -138,18 +101,125 @@ function getStatusMessage(status) {
     }
 }
 
-function checkParams() {
-    if ($("#inputName").val().length != 0 && $("#inputPrice").val().length != 0) {
-        $("#submitButton").removeAttr('disabled');
-    }
-    else {
-        $("#submitButton").attr('disabled', 'disabled');
+
+function uploadImg(controllerName, product) {
+    var files = document.getElementById('uploadFile').files;
+    if (files.length > 0) {
+        if (window.FormData) {
+            var data = new FormData();
+            for (var x = 0; x < files.length; x++) {
+                data.append("file" + x, files[x]);
+            }
+            $.ajax({
+                type: "POST",
+                url: "UploadImg",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: successUploadImg.bind(null, controllerName, product),
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+        } else {
+            alert("Браузер не поддерживает загрузку файлов HTML5!");
+        }
     }
 }
+
+function AddOrEdit(controllerName, product) {
+    $("#submitButton").click(function () {
+        if (needUploadImg(controllerName))
+            uploadImg(controllerName, product);
+        else {
+            setProductData(product);
+            if (!checkProductData(product))
+                return;
+            sendData(controllerName, product);
+        }
+    });
+}
+
+function needUploadImg(controllerName) {
+    let imgSrc = document.querySelector(".addEditProductImg").getAttribute("src").replace('GetImg?id=', '');
+    let defaultRes = "defaultImg.png";
+
+    switch (controllerName) {
+        case "AddProduct":
+            if (imgSrc === defaultRes)
+                return false;
+            break;
+        case "EditProduct":
+            let productImgRes = window.product.Data.ProductImageRes;
+            if ((productImgRes === imgSrc) || (imgSrc === defaultRes))
+                return false;
+            break;
+    }
+    return true;
+}
+
+function getImg(imgRes) {
+    $(".addEditProductImg").attr("src", `GetImg?id=${imgRes}`);
+}
+
+function successUploadImg(controllerName, product, RequstResult) {
+    if (RequstResult.IsSuccess) {
+        getImg(RequstResult.Data);
+        setProductData(product);
+        if (!checkProductData(product))
+            return;
+        else
+            sendData(controllerName, product);
+    }
+    else {
+        $("#errorMessage").show();
+        $("#errorMessage").text(RequstResult.Error);
+    }
+}
+
+function checkProductData(product) {
+    if (!$.trim(product.ProductName)) {
+        getStatusMessage('failName');
+        return false;
+    }
+    if ($("#inputPrice").val() <= 0 || !$("#inputPrice").val()) {
+        getStatusMessage("failPrice");
+        return false;
+    }
+    return true;
+}
+
+function setProductData(product) {
+    product.ProductName = $("#inputName").val();
+    product.ProductPrice = Number.parseFloat($("#inputPrice").val()).toFixed(2);
+    product.ProductCategory = $("select option:selected").text();
+    product.ProductImageRes = $(".addEditProductImg").attr("src").replace('GetImg?id=', '');
+}
+
+function sendData(controllerName, product) {
+    $.post(controllerName, product, function (RequestResult) {
+        if (RequestResult.IsSuccess) {
+            switch (controllerName) {
+                case "AddProduct":
+                    getStatusMessage("successAdd");
+                    $("#submitButton").toggleClass("btnFuncDisable");
+                    break;
+                case "EditProduct":
+                    getStatusMessage("successEdit");
+                    $("#submitButton").toggleClass("btnFuncDisable");
+                    break;
+            }
+        }
+        else {
+            setErrorColorMessage();
+            $("#statusMessage").text(RequestResult.Error);
+        }
+    });
+}
+
 
 function limitDecimal(e) {
     if (e.value.indexOf(".") != '-1') {
         e.value = e.value.substring(0, e.value.indexOf(".") + 3);
     }
 }
-
