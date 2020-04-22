@@ -129,17 +129,31 @@ function uploadImg(controllerName, product) {
 
 function AddOrEdit(controllerName, product) {
     $("#submitButton").click(function () {
-        if (needUploadImg(controllerName))
+        if (!checkFields())
+            return;
+        if (needUploadImg(controllerName)) {
             uploadImg(controllerName, product);
-        else {
-            setProductData(product);
-            if (!checkProductData(product))
-                return;
-            sendData(controllerName, product);
+            return;
         }
+        setProductData(product);
+        if (!checkProductData(product))
+            return;
+        sendData(controllerName, product);
     });
 }
 
+function checkFields() {
+    let name = $("#inputName").val();
+    if (!$.trim(name)) {
+        getStatusMessage('failName');
+        return false;
+    }
+    if ($("#inputPrice").val() <= 0 || !$("#inputPrice").val()) {
+        getStatusMessage("failPrice");
+        return false;
+    }
+    return true;
+}
 function needUploadImg(controllerName) {
     let imgSrc = document.querySelector(".addEditProductImg").getAttribute("src").replace('GetImg?id=', '');
     let defaultRes = "defaultImg.png";
