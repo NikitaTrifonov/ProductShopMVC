@@ -147,10 +147,13 @@ h1, h2, h3, h4, h5, h6 {
     border: none;
 }
 
-    .btnDeleteImg, .btnEditImg:active {
+    .btnDeleteImg:active, .btnEditImg:active {
         transform: scale(0.90);
     }
-#productsTable{
+
+      
+
+#productsTable {
     background-color: #fff;
 }
 

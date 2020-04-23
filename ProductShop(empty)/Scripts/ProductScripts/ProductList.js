@@ -56,7 +56,7 @@ function addContentInTable(RequestResult) {
             tr.append(`<td>${RequestResult.Data[i].CategoryString}</td>`)
             tr.append(`<td><p>${RequestResult.Data[i].ProductPrice} ₽</p></td>`);
             tr.append(`<td><a href ='EditProductView?id=${RequestResult.Data[i].ProductId}'><img class ='btnEditImg' src='../Content/Images/btnEdit.png'/></a></td >`);
-            tr.append(`<td><a id='btnDelete'><img class ='btnDeleteImg'  src='../Content/Images/btnDelete.png'/ data-product-id='${RequestResult.Data[i].ProductId}'></a ></td > `);
+            tr.append(`<td><a id='btnDelete' href="#"><img class ='btnDeleteImg'  src='../Content/Images/btnDelete.png'/ data-product-id='${RequestResult.Data[i].ProductId}'/></a ></td > `);
             $('#productsTable').append(tr);
         }
     }
