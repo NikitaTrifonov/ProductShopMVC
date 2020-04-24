@@ -5,11 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using Npgsql;
-using ProductShopMVC.Services.Models.Products;
-using ProductShopMVC.Services.Models.Products.Types;
 using ProductShopMVC.Services.Models.Products.DbModels;
-
-
 
 
 namespace ProductShopMVC.Services.Repositories.Products
@@ -141,6 +137,28 @@ namespace ProductShopMVC.Services.Repositories.Products
             }
 
         }
+
+        public static List<DbProduct> GetProductsByIdList(List<string> idList)
+        {
+            string[] idArray = idList.ToArray();
+            List<DbProduct> result = new List<DbProduct>();
+            using (NpgsqlConnection connection = new NpgsqlConnection(WebConfigurationManager.ConnectionStrings["ProductContext"].ConnectionString))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand("SELECT * FROM products " +
+                                                   "WHERE productid = ANY(@idArray)", connection))
+                {
+                    cmd.Parameters.AddWithValue("idArray", idArray);
+                    using (var reader = cmd.ExecuteReader())
+                        while (reader.Read())
+                        {
+                            result.Add(setDbProduct(reader));
+                        }
+                }
+            }
+            return result;
+        }
+
         private static DbProduct setDbProduct(NpgsqlDataReader reader)
         {
             return new DbProduct(reader.GetString(0), reader.GetString(1), reader.GetDecimal(2), reader.GetInt32(3), reader.GetString(4));

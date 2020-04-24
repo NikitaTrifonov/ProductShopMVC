@@ -114,6 +114,10 @@ namespace ProductShopMVC.Services.Services.Products
             ProductRepository.EditProduct(SetProductData(productFromView));
         }
 
+        public List<Product> GetProductsByIdList(List<String> idList)
+        {
+            return ConvertDbProductListToProductList(ProductRepository.GetProductsByIdList(idList));
+        }
 
         private DbProduct SetProductData(AddEditProduct productFromView)
         {
@@ -122,7 +126,7 @@ namespace ProductShopMVC.Services.Services.Products
             newDbProduct.DbProductName = productFromView.ProductName;
             newDbProduct.DbProductPrice = Decimal.Parse(productFromView.ProductPrice.Replace(".", ","));
             newDbProduct.DbProductCategory = (int)CategoryConverter.RusStringToEnum(productFromView.ProductCategory);
-            newDbProduct.DbImageRes = productFromView.ProductImageRes; 
+            newDbProduct.DbImageRes = productFromView.ProductImageRes;
             return newDbProduct;
         }
         private string CheckProductDataFromView(AddEditProduct productFromView)
@@ -146,7 +150,7 @@ namespace ProductShopMVC.Services.Services.Products
 
             return null;
         }
-        private List<Product> ConvertDbProductListToProductList(List<DbProduct> dbProductList)
+        public List<Product> ConvertDbProductListToProductList(List<DbProduct> dbProductList)
         {
             List<Product> result = new List<Product>();
             foreach (DbProduct dbProduct in dbProductList)
