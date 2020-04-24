@@ -200,6 +200,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Controllers\Products\ProductController.cs" />
+    <Compile Include="Controllers\ShopMenu\ShopMenuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -220,6 +221,7 @@
     <Content Include="Views\Info\Index.cshtml" />
     <Content Include="Views\Clients\ClientsList.cshtml" />
     <Content Include="Views\Clients\AddEditClient.cshtml" />
+    <Content Include="Views\ShopMenu\ShopMenuList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -229,6 +231,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Shop\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProductShopMVC.Services\ProductShopMVC.Services.csproj">
