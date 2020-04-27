@@ -1,7 +1,44 @@
 ﻿
-@{    
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="@Url.Content("~/Content/ProductStyle/ShopMenu.css")" rel="stylesheet" type="text/css" />
 
-<h2>ShopMenuList</h2>
+<div class="shopMenuContent">
+    <ul class="shopMenuItems">
+        <li class="shopMenuItemWrapper">
+            <div class="menuItemBox">
+                <div class="menuItemImg imgFlex">
+                    <img src="~/Content/Images/banan1.jpg" />
+                </div>
 
+                <div class="menuItemInfo">
+                    <h3 id="menuItemName">Банан</h3>
+                    <ul class="menuItemDescription">
+                        <li>Категория:&emsp; <span id="menuItemCategory">Фрукты</span></li>
+                        <li>Средняя масса:&emsp;<span id="average_weight">0.2 кг/шт.</span></li>
+                        <li>Страна:&emsp;<span id="country">Россия</span></li>
+                    </ul>
+                    <span class="menuItemPrice">
+                        <span id="rub" class="rub">106</span>
+                        <span class="rub">,</span>
+                        <span id="cop" class="cop">48</span>
+                        <span class="rub_kg">₽/шт</span>
+                    </span>
+                    <div class="menuItemBtnBox">
+                        <div class="menuItemCountBox">
+                            <span class="menuItemCount">0 шт</span>
+                            <div class="countBtnBox">
+                                <span class="plusCountBtn"></span>
+                                <span class="minusCountBtn"></span>
+                            </div>                           
+                        </div>
+                        <div class="addInCartBtnBox">
+                            <span class="addInCartBtn"></span>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

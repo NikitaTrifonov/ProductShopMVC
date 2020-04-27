@@ -143,15 +143,17 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\45.png" />
     <Content Include="Content\Images\banan1.jpg" />
     <Content Include="Content\Images\btnDelete.png" />
     <Content Include="Content\Images\btnEdit.png" />
-    <Content Include="Content\Images\78.png" />
+    <Content Include="Content\Images\cart_menuItem.png" />
     <Content Include="Content\Images\kelli-mcclintock-GopRYASfsOc-unsplash.jpg" />
+    <Content Include="Content\Images\minus_menuItemCount.png" />
+    <Content Include="Content\Images\plus_menuItemCount.png" />
     <Content Include="Content\ProductStyle\AddEditProductPage.css" />
     <Content Include="Content\ProductStyle\InfoPage.css" />
     <Content Include="Content\ProductStyle\ProductShop.css" />
+    <Content Include="Content\ProductStyle\ShopMenu.css" />
     <Content Include="Files\defaultImg.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -231,7 +233,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Shop\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProductShopMVC.Services\ProductShopMVC.Services.csproj">
