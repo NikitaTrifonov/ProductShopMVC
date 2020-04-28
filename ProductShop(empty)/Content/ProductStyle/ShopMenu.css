@@ -38,7 +38,7 @@
     justify-content: center;
 }
 
-menuItemImg {
+menuItemImgBox {
     transition: 1s ease-in-out;
 }
 
@@ -145,6 +145,7 @@ menuItemImg {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    
 }
 
     .addInCartBtnBox span {
