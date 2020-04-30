@@ -30,7 +30,7 @@ function setShopMenuItem(Data, newShopMenuItem) {
     newMenuItem.itemId = Data.Product.ProductId;
 
     let img = newMenuItem.querySelector(".menuItemImg");
-    img.setAttribute("src", "../Content/Images/banan1.jpg");
+    img.setAttribute("src", `../Images/GetImg?id=${Data.Product.ProductImageRes}`);
 
     let name = newMenuItem.querySelector("#menuItemName");
     name.textContent = Data.Product.ProductName;
@@ -39,7 +39,7 @@ function setShopMenuItem(Data, newShopMenuItem) {
     category.textContent = Data.Product.CategoryString;
 
     let averageWeight = newMenuItem.querySelector("#averageWeight");
-    averageWeight.textContent = Data.Product.ProductPrice;
+    averageWeight.textContent = Data.Product.ProductWeight;
 
     let country = newMenuItem.querySelector("#country");
     country.textContent = "В разработке";

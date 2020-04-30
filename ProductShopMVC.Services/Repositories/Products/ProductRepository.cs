@@ -106,11 +106,11 @@ namespace ProductShopMVC.Services.Repositories.Products
             {
                 connection.Open();
                 using (var cmd = new NpgsqlCommand("UPDATE products " +
-                                                   "SET productname = @name, productprice = @price, productcategory = @category, imageRes = @res " +
+                                                   "SET productname = @name, productweight = @weight, productcategory = @category, imageRes = @res " +
                                                    "WHERE productid = @id", connection))
                 {
                     cmd.Parameters.AddWithValue("name", changedProduct.DbProductName);
-                    cmd.Parameters.AddWithValue("price", changedProduct.DbProductPrice);
+                    cmd.Parameters.AddWithValue("weight", changedProduct.DbProductWeight);
                     cmd.Parameters.AddWithValue("category", changedProduct.DbProductCategory);
                     cmd.Parameters.AddWithValue("res", changedProduct.DbImageRes);
                     cmd.Parameters.AddWithValue("id", changedProduct.DbProductId);
@@ -124,12 +124,12 @@ namespace ProductShopMVC.Services.Repositories.Products
             using (NpgsqlConnection connection = new NpgsqlConnection(WebConfigurationManager.ConnectionStrings["ProductContext"].ConnectionString))
             {
                 connection.Open();
-                using (var cmd = new NpgsqlCommand("INSERT INTO products (productid, productname, productprice, productcategory, imageRes) " +
-                                                   "VALUES (@productid, @productname, @productprice, @productcategory, @imageRes)", connection))
+                using (var cmd = new NpgsqlCommand("INSERT INTO products (productid, productname, productweight, productcategory, imageRes) " +
+                                                   "VALUES (@productid, @productname, @productweight, @productcategory, @imageRes)", connection))
                 {
                     cmd.Parameters.AddWithValue("productid", newDbProduct.DbProductId);
                     cmd.Parameters.AddWithValue("productname", newDbProduct.DbProductName);
-                    cmd.Parameters.AddWithValue("productprice", newDbProduct.DbProductPrice);
+                    cmd.Parameters.AddWithValue("productweight", newDbProduct.DbProductWeight);
                     cmd.Parameters.AddWithValue("productcategory", newDbProduct.DbProductCategory);
                     cmd.Parameters.AddWithValue("imageRes", newDbProduct.DbImageRes);
                     cmd.ExecuteNonQuery();

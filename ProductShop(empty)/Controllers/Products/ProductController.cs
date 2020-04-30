@@ -87,18 +87,7 @@ namespace ProductShop_empty_.Controllers.Products
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public JsonResult UploadImg()
-        {
-            ResultHandler<String> result = new ResultHandler<string>(FileService.UploadImg(Request, "product", out DefaultError outError), outError.ErrorMessage);
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        public ActionResult GetImg(string id)
-        {
-            return base.File(FileService.GetImgPath(id), "image/jpeg");
-        }
+       
     }
 
 }

@@ -51,10 +51,10 @@ function addContentInTable(RequestResult) {
         for (var i = 0; i < RequestResult.Data.length; i++) {
             tr = $('<tr class ="trContent">');
             tr.append(`<td>${(i + 1)}</td>`);
-            tr.append(`<td><img class ='productImg' src='GetImg?id=${RequestResult.Data[i].ProductImageRes}'></td>`);
+            tr.append(`<td><img class ='productImg' src='../Images/GetImg?id=${RequestResult.Data[i].ProductImageRes}'></td>`);
             tr.append(`<td>${RequestResult.Data[i].ProductName}</td>`);
             tr.append(`<td>${RequestResult.Data[i].CategoryString}</td>`)
-            tr.append(`<td><p>${RequestResult.Data[i].ProductPrice} ₽</p></td>`);
+            tr.append(`<td><p>${RequestResult.Data[i].ProductWeight} Кг</p></td>`);
             tr.append(`<td><a href ='EditProductView?id=${RequestResult.Data[i].ProductId}'><img class ='btnEditImg' src='../Content/Images/btnEdit.png'/></a></td >`);
             tr.append(`<td><a id='btnDelete' href="#"><img class ='btnDeleteImg'  src='../Content/Images/btnDelete.png'/ data-product-id='${RequestResult.Data[i].ProductId}'/></a ></td > `);
             $('#productsTable').append(tr);

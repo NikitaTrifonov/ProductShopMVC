@@ -156,8 +156,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .productImg {
-    width: 140px;
-    height: 110px;
+    width: 130px;
+    height: 90px;
 }
 /*Модальное окно подтверждения удаления*/
 .delDialogWindow {

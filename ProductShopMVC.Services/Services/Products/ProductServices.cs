@@ -124,7 +124,7 @@ namespace ProductShopMVC.Services.Services.Products
             DbProduct newDbProduct = new DbProduct();
             newDbProduct.DbProductId = String.IsNullOrEmpty(productFromView.ProductId) ? GeneratorId.GenerateId() : productFromView.ProductId;
             newDbProduct.DbProductName = productFromView.ProductName;
-            newDbProduct.DbProductPrice = Decimal.Parse(productFromView.ProductPrice.Replace(".", ","));
+            newDbProduct.DbProductWeight = Decimal.Parse(productFromView.ProductWeight.Replace(".", ","));
             newDbProduct.DbProductCategory = (int)CategoryConverter.RusStringToEnum(productFromView.ProductCategory);
             newDbProduct.DbImageRes = productFromView.ProductImageRes;
             return newDbProduct;
@@ -135,10 +135,10 @@ namespace ProductShopMVC.Services.Services.Products
             if (String.IsNullOrEmpty(productFromView.ProductName))
                 return "Ошибка ввода данных. Пустое значение названия продукта!";
 
-            if (String.IsNullOrEmpty(productFromView.ProductPrice))
+            if (String.IsNullOrEmpty(productFromView.ProductWeight))
                 return "Ошибка ввода данных. Пустое значение цены продукта!";
 
-            if (Decimal.TryParse(productFromView.ProductPrice, out price))
+            if (Decimal.TryParse(productFromView.ProductWeight, out price))
                 return "Ошибка ввода данных. Значение цены продукта не  может быть меньше или равна нулю!";
 
             return null;
@@ -162,7 +162,7 @@ namespace ProductShopMVC.Services.Services.Products
 
         private Product ConverDbProductToProduct(DbProduct dbProduct)
         {
-            return new Product(dbProduct.DbProductId, dbProduct.DbProductName, dbProduct.DbProductPrice.ToString(), (ProductCategory)dbProduct.DbProductCategory, dbProduct.DbImageRes);
+            return new Product(dbProduct.DbProductId, dbProduct.DbProductName, dbProduct.DbProductWeight.ToString(), (ProductCategory)dbProduct.DbProductCategory, dbProduct.DbImageRes);
         }
     }
 }

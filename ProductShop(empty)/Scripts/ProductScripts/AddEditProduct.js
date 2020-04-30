@@ -5,7 +5,7 @@
         product = {
             ProductId: "",
             ProductName: "",
-            ProductPrice: "",
+            ProductWeight: "",
             ProductCategory: "",
             ProductImageRes: "defaultImg.png"
         }
@@ -22,7 +22,7 @@
         $("#File-upload-button").text("Изменить");
         $("#inputId").val(product.ProductId);
         $("#inputName").val(product.ProductName);
-        $("#inputPrice").val((product.ProductPrice).replace(/,/g, "."));
+        $("#inputWeight").val((product.ProductWeight).replace(/,/g, "."));
         $("#ProductCategory").val(product.ProductType).change();
         AddOrEdit("EditProduct", product);
     }
@@ -57,7 +57,7 @@ $("#delImgBtn").click(function () {
 })
 
 function checkParams() {
-    if ($("#inputName").val().length != 0 && $("#inputPrice").val().length != 0) {
+    if ($("#inputName").val().length != 0 && $("#inputWeight").val().length != 0) {
         $("#submitButton").removeAttr('disabled');
     }
     else {
@@ -94,9 +94,9 @@ function getStatusMessage(status) {
             setErrorColorMessage()
             $("#statusMessage").text("Некорректный ввод названия продукта! Название не может быть пустым.");
             break;
-        case "failPrice":
+        case "failWeight":
             setErrorColorMessage();
-            $("#statusMessage").text("Некорректный ввод цены продукта! Цена не может быть меньше или равна нулю.");
+            $("#statusMessage").text("Некорректный ввод веса продукта!");
             break;
     }
 }
@@ -112,7 +112,7 @@ function uploadImg(controllerName, product) {
             }
             $.ajax({
                 type: "POST",
-                url: "UploadImg",
+                url: "../Images/UploadImg",
                 contentType: false,
                 processData: false,
                 data: data,
@@ -148,14 +148,14 @@ function checkFields() {
         getStatusMessage('failName');
         return false;
     }
-    if ($("#inputPrice").val() <= 0 || !$("#inputPrice").val()) {
-        getStatusMessage("failPrice");
+    if ($("#inputWeight").val() <= 0 || !$("#inputWeight").val()) {
+        getStatusMessage("failWeight");
         return false;
     }
     return true;
 }
 function needUploadImg(controllerName) {
-    let imgSrc = document.querySelector(".addEditProductImg").getAttribute("src").replace('GetImg?id=', '');
+    let imgSrc = document.querySelector(".addEditProductImg").getAttribute("src").replace('../Images/GetImg?id=', '');
     let defaultRes = "defaultImg.png";
 
     switch (controllerName) {
@@ -173,7 +173,7 @@ function needUploadImg(controllerName) {
 }
 
 function getImg(imgRes) {
-    $(".addEditProductImg").attr("src", `GetImg?id=${imgRes}`);
+    $(".addEditProductImg").attr("src", `../Images/GetImg?id=${imgRes}`);
 }
 
 function successUploadImg(controllerName, product, RequstResult) {
@@ -196,7 +196,7 @@ function checkProductData(product) {
         getStatusMessage('failName');
         return false;
     }
-    if ($("#inputPrice").val() <= 0 || !$("#inputPrice").val()) {
+    if ($("#inputWeight").val() <= 0 || !$("#inputWeight").val()) {
         getStatusMessage("failPrice");
         return false;
     }
@@ -205,9 +205,9 @@ function checkProductData(product) {
 
 function setProductData(product) {
     product.ProductName = $("#inputName").val();
-    product.ProductPrice = Number.parseFloat($("#inputPrice").val()).toFixed(2);
+    product.ProductWeight = Number.parseFloat($("#inputWeight").val()).toFixed(2);
     product.ProductCategory = $("select option:selected").text();
-    product.ProductImageRes = $(".addEditProductImg").attr("src").replace('GetImg?id=', '');
+    product.ProductImageRes = $(".addEditProductImg").attr("src").replace('../Images/GetImg?id=', '');
 }
 
 function sendData(controllerName, product) {

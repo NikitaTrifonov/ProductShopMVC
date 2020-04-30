@@ -10,7 +10,7 @@ namespace ProductShopMVC.Services.Models.Products
     {
         public string ProductId { get; set; }
         public string ProductName { get; set; }
-        public string ProductPrice { get; set; }
+        public string ProductWeight { get; set; }
         public string ProductCategory { get; set; }
         public string ProductImageRes { get; set; }
 
@@ -20,7 +20,7 @@ namespace ProductShopMVC.Services.Models.Products
         {
             ProductId = id;
             ProductName = name;
-            ProductPrice = price;
+            ProductWeight = price;
             ProductCategory = category;
             ProductImageRes = imageRes;
         }

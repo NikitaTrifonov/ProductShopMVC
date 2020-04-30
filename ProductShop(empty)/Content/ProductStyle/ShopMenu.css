@@ -37,7 +37,10 @@
     align-items: center;
     justify-content: center;
 }
-
+.menuItemImg{
+    height: 130px;
+    width: 188px;
+}
 menuItemImgBox {
     transition: 1s ease-in-out;
 }

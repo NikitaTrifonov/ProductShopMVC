@@ -10,7 +10,7 @@ namespace ProductShopMVC.Services.Models.Products.DbModels
     {        
         public string DbProductId { get; set; }
         public string DbProductName { get; set; }
-        public decimal DbProductPrice { get; set; }
+        public decimal DbProductWeight { get; set; }
         public int DbProductCategory { get; set; }
         public string DbImageRes { get; set; }
 
@@ -18,7 +18,7 @@ namespace ProductShopMVC.Services.Models.Products.DbModels
         {
             DbProductId = dbProductId;
             DbProductName = dbProductName;
-            DbProductPrice = dbProductPrice;
+            DbProductWeight = dbProductPrice;
             DbProductCategory = dbProductType;
             DbImageRes = dbImageRes;
         }

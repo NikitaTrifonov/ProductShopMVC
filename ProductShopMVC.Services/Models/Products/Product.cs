@@ -10,7 +10,7 @@ namespace ProductShopMVC.Services.Models.Products
     {
         public string ProductId { get; set; }
         public string ProductName { get; set; }
-        public string ProductPrice { get; set; }
+        public string ProductWeight { get; set; }
         public ProductCategory ProductType { get; set; }
         public string CategoryString { get { return CategoryConverter.EnumToRusString(this.ProductType); }}
         public string ProductImageRes { get; set; }
@@ -19,7 +19,7 @@ namespace ProductShopMVC.Services.Models.Products
         {
             ProductId = id;
             ProductName = name;
-            ProductPrice = price;
+            ProductWeight = price;
             ProductType = type;
             ProductImageRes = imageRes;
         }
