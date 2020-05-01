@@ -3,11 +3,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="@Url.Content("~/Content/ProductStyle/ShopMenu.css")" rel="stylesheet" type="text/css" />
-
-<div class="shopMenuContent">
-    <ul class="shopMenuItems">      
-    </ul>
+<div class="shopMenuBox">
+    <div class="shopMenuToolsBox">
+        <div class="sortBox">            
+            <h4>Категория</h4>
+            <ul class="checkList">                
+            </ul>       
+            <button>Показать</button>
+        </div>
+    </div>
+    <div class="shopMenuContent">
+        <ul class="shopMenuItems">
+        </ul>
+    </div>
+    <p class="errorMessage"></p>
 </div>
+
 
 <template id="shopMenuItemTemplate">
     <li class="shopMenuItemWrapper">

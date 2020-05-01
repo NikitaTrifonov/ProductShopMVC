@@ -1,10 +1,17 @@
-﻿.shopMenuContent {    
+﻿.shopMenuBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.shopMenuContent {
     margin-left: auto;
     margin-right: auto;
     padding: 0;
     width: 70%;
     height: 90vh;
-   padding: 5px;
+    padding: 5px;
 }
 
 .shopMenuItems {
@@ -37,10 +44,12 @@
     align-items: center;
     justify-content: center;
 }
-.menuItemImg{
+
+.menuItemImg {
     height: 130px;
     width: 188px;
 }
+
 menuItemImgBox {
     transition: 1s ease-in-out;
 }
@@ -148,7 +157,6 @@ menuItemImgBox {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
 }
 
     .addInCartBtnBox span {
@@ -163,3 +171,26 @@ menuItemImgBox {
         .addInCartBtnBox span:active {
             transform: scale(1.05);
         }
+
+/*Поле иснтрументов*/
+.shopMenuToolsBox {
+    padding: 0;
+    margin: -4px 0 0 -4px;
+    position: fixed;
+    background-color: white;
+    width: 10%;
+    height: 100vh;
+    border-right: 1px solid #808080;
+}
+
+
+
+.sortBox {
+    margin: 5px;    
+}
+
+.checkList {
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+}

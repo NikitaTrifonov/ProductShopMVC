@@ -1,14 +1,27 @@
-﻿
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     getShopMenuItemsList();
+    getProductsCategories();
 })
 
-
+function getProductsCategories() {
+    $.getJSON("GetProductsCategories", renderCheckBoxCategories)
+}
 function getShopMenuItemsList() {
     $.getJSON("GetShopMenu", renderShopMenuItems)
 }
 
+function renderCheckBoxCategories(RequstResult) {
+    if (RequstResult.IsSuccess) {
+        for (let i = 0; i < RequstResult.Data.length; i++) {
+            $(".checkList").append(`<li><input type='checkbox' name='sort${i}' value='${i}' />${RequstResult.Data[i]}</li>`)
+        }
+    }
+    else {
+        $("#errorMessage").show();
+        $("#errorMessage").text("Ошибка загрузки категорий товаров!");
+        return
+    }
+}
 
 function renderShopMenuItems(RequstResult) {
 
@@ -23,7 +36,7 @@ function renderShopMenuItems(RequstResult) {
 }
 
 function setShopMenuItem(Data, newShopMenuItem) {
-    
+
     let newMenuItem = newShopMenuItem.cloneNode(true);
     const [rub, cop] = Data.MenuItemPrice.split(",");
 
