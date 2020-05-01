@@ -139,7 +139,7 @@ namespace ProductShopMVC.Services.Services.Products
                 return "Ошибка ввода данных. Пустое значение цены продукта!";
 
             if (Decimal.TryParse(productFromView.ProductWeight, out price))
-                return "Ошибка ввода данных. Значение цены продукта не  может быть меньше или равна нулю!";
+                return "Ошибка ввода данных. Значение массы продукта не  может быть меньше или равна нулю!";
 
             return null;
         }

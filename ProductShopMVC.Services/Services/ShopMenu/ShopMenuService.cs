@@ -44,10 +44,12 @@ namespace ProductShopMVC.Services.Services.ShopMenu
         private List<MenuItem> setShopMenu(List<DbMenuItem> dbShopMenu, List<Product> shopMenuProduct)
         {
             List<MenuItem> shopMenu = new List<MenuItem>();
-
             foreach (DbMenuItem dbMenuItem in dbShopMenu)
             {
-                shopMenu.Add(setMuneItem(dbMenuItem, shopMenuProduct.FirstOrDefault(product => product.ProductId == dbMenuItem.DbMenuItemProductId)));
+                Product checkNullProduct = shopMenuProduct.FirstOrDefault(product => product.ProductId == dbMenuItem.DbMenuItemProductId);
+                if (checkNullProduct == null)
+                    continue;
+                shopMenu.Add(setMuneItem(dbMenuItem, checkNullProduct));
             }
             return shopMenu;
         }
