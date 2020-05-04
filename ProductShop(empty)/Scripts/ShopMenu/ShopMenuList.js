@@ -13,7 +13,10 @@ function getShopMenuItemsList() {
 function renderCheckBoxCategories(RequstResult) {
     if (RequstResult.IsSuccess) {
         for (let i = 0; i < RequstResult.Data.length; i++) {
-            $(".checkList").append(`<li><input type='checkbox' name='sort${i}' value='${i}' />${RequstResult.Data[i]}</li>`)
+            if (i === 0)
+                $(".checkList").append(`<li><input type='checkbox' class='allCategories' value='${i}' onchange='checkSelect(this)' checked /><b>${RequstResult.Data[i]}</b></li>`);
+            else
+                $(".checkList").append(`<li><input type='checkbox' class='otherCategory' value='${i}' onchange='checkSelect(this)' />${RequstResult.Data[i]}</li>`);
         }
     }
     else {
@@ -22,6 +25,28 @@ function renderCheckBoxCategories(RequstResult) {
         return
     }
 }
+
+function checkSelect(checkBox) {
+    if (checkBox.checked === true) {
+        switch (checkBox.className) {
+            case "allCategories":
+                disableCheckBoxes("otherCategory");
+                break;
+            case "otherCategory":
+                disableCheckBoxes("allCategories");
+                break;
+        }
+    }
+}
+
+function disableCheckBoxes(checkBoxName) {
+    let otherCheckBoxes = document.getElementsByClassName(checkBoxName);
+    for (let i = 0; i < otherCheckBoxes.length; i++) {
+        otherCheckBoxes[i].checked = false;
+    }
+}
+
+
 
 function renderShopMenuItems(RequstResult) {
 
