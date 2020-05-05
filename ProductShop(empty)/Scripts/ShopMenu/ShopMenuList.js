@@ -14,20 +14,20 @@ function renderCheckBoxCategories(RequstResult) {
     if (RequstResult.IsSuccess) {
         for (let i = 0; i < RequstResult.Data.length; i++) {
             if (i === 0)
-                $(".checkList").append(`<li><input type='checkbox'  class='allCategories' value='${RequstResult.Data[i]}' onchange='checkSelect(this)' /><b>${RequstResult.Data[i]}</b></li>`);
+                $(".checkList").append(`<li><input type='checkbox' class='allCategories' value='${RequstResult.Data[i]}' onchange='checkSelect(this)' /><b>${RequstResult.Data[i]}</b></li>`);
             else
                 $(".checkList").append(`<li><input type='checkbox'  class='otherCategory' value='${RequstResult.Data[i]}' onchange='checkSelect(this)' />${RequstResult.Data[i]}</li>`);
         }
     }
     else {
-        $("#errorMessage").show();
-        $("#errorMessage").text("Ошибка загрузки категорий товаров!");
+        $(".errorMessage").show();
+        $(".errorMessage").text("Ошибка загрузки категорий товаров!");
         return
     }
 }
 
-function checkSelect(checkBox) {   
-    if (checkBox.checked === true) {      
+function checkSelect(checkBox) {
+    if (checkBox.checked === true) {
         switch (checkBox.className) {
             case "allCategories":
                 checkBox.classList.toggle("selectedCheckBox");
@@ -52,25 +52,44 @@ function disableCheckBoxes(checkBoxName) {
 }
 
 $(".submitCategories").click(function () {
+    $(".errorMessage").hide();
     let checkBoxes = document.getElementsByClassName("selectedCheckBox");
-    let selectedCategories = [];
-    for (let i = 0; i < checkBoxes.length; i++) {
-        if (checkBoxes[i].checked)
-            selectedCategories.push(checkBoxes[i].getAttribute("value"));
+    if (!checkBoxes.length) {
+        $(".errorMessage").show();
+        $(".errorMessage").text("Категория не выбрана");
+        return;
     }
-    alert(selectedCategories);
+    if (checkBoxes[0].classList.contains("allCategories"))
+        getShopMenuItemsList();
+    else {
+        let selectedCategories = [];
+        for (let i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].checked)
+                selectedCategories.push(checkBoxes[i].getAttribute("value"));
+        }
+        getSortedMenu(selectedCategories);
+    }
 })
 
+function getSortedMenu(selectedCategories) {
+    $.post("SortShopMenuByCategories", { ComingCategories: selectedCategories }, renderShopMenuItems)
+}
 
 function renderShopMenuItems(RequstResult) {
+    if (RequstResult.IsSuccess) {
+        let shopMenuItemsList = document.querySelector(".shopMenuItems");
+        let shopMenuItemTemplate = document.querySelector("#shopMenuItemTemplate").content;
+        let newShopMenuItem = shopMenuItemTemplate.querySelector(".shopMenuItemWrapper");
+        shopMenuItemsList.innerHTML = "";
 
-    let shopMenuItemsList = document.querySelector(".shopMenuItems");
-    let shopMenuItemTemplate = document.querySelector("#shopMenuItemTemplate").content;
-    let newShopMenuItem = shopMenuItemTemplate.querySelector(".shopMenuItemWrapper");
+        for (var i = 0; i < RequstResult.Data.length; i++) {
 
-    for (var i = 0; i < RequstResult.Data.length; i++) {
-
-        shopMenuItemsList.appendChild(setShopMenuItem(RequstResult.Data[i], newShopMenuItem));
+            shopMenuItemsList.appendChild(setShopMenuItem(RequstResult.Data[i], newShopMenuItem));
+        }
+    }
+    else {
+        $(".errorMessage").show();
+        $(".errorMessage").text(RequstResult.Error);
     }
 }
 

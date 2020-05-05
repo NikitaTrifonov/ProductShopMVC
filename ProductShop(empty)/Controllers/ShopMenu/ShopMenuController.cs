@@ -34,5 +34,12 @@ namespace ProductShop_empty_.Controllers.ShopMenu
             ResultHandler<List<string>> result = new ResultHandler<List<string>>(productCategories.ProductCategory, "");
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult SortShopMenuByCategories(string[] comingCategories)
+        {
+            ResultHandler<List<MenuItem>> result = new ResultHandler<List<MenuItem>>(shopMenuService.SortShopMenuByCategories(comingCategories.ToList<string>(), out DefaultError outError), outError.ErrorMessage); ;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

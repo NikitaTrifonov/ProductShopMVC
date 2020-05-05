@@ -8,6 +8,7 @@ using ProductShopMVC.Tools.Errors;
 using ProductShopMVC.Services.Models.ShopMenu;
 using ProductShopMVC.Services.Models.ShopMenu.DbModels;
 using ProductShopMVC.Services.Models.Products;
+using ProductShopMVC.Services.Models.Products.Types;
 using ProductShopMVC.Services.Repositories.ShopMenu;
 
 namespace ProductShopMVC.Services.Services.ShopMenu
@@ -22,7 +23,7 @@ namespace ProductShopMVC.Services.Services.ShopMenu
             outError = new DefaultError();
             List<DbMenuItem> dbShopMenu = ShopMenuRepository.GetDbShopMenu();
             List<Product> shopMenuProduct = productServices.GetProductsByIdList(GetMenuItemsIdList(dbShopMenu));
-            shopMenu = setShopMenu(dbShopMenu, shopMenuProduct);
+            shopMenu = SetShopMenu(dbShopMenu, shopMenuProduct);
             if (shopMenu == null || !shopMenu.Any())
             {
                 outError.ErrorMessage = "Ошибка формирования меню";
@@ -41,20 +42,55 @@ namespace ProductShopMVC.Services.Services.ShopMenu
             return menuItemsIdList;
         }
 
-        private List<MenuItem> setShopMenu(List<DbMenuItem> dbShopMenu, List<Product> shopMenuProduct)
+        private List<MenuItem> SetShopMenu(List<DbMenuItem> dbShopMenu, List<Product> shopMenuProducts)
         {
             List<MenuItem> shopMenu = new List<MenuItem>();
             foreach (DbMenuItem dbMenuItem in dbShopMenu)
             {
-                Product checkNullProduct = shopMenuProduct.FirstOrDefault(product => product.ProductId == dbMenuItem.DbMenuItemProductId);
+                Product checkNullProduct = shopMenuProducts.FirstOrDefault(product => product.ProductId == dbMenuItem.DbMenuItemProductId);
                 if (checkNullProduct == null)
                     continue;
-                shopMenu.Add(setMuneItem(dbMenuItem, checkNullProduct));
+                shopMenu.Add(SetMuneItem(dbMenuItem, checkNullProduct));
             }
             return shopMenu;
         }
 
-        private MenuItem setMuneItem(DbMenuItem dbMenuItem, Product product)
+        public List<MenuItem> SortShopMenuByCategories(List<string> comingCategories, out DefaultError outError)
+        {
+            outError = new DefaultError();
+            List<MenuItem> result = new List<MenuItem>();
+            List<MenuItem> menuItems = GetShopMenu(out DefaultError error);
+            List<int> categories = ConverComingCategories(comingCategories);
+            if (menuItems == null)
+            {
+                outError.ErrorMessage = error.ErrorMessage;
+                return new List<MenuItem>();
+            }           
+            if(categories == null)
+            {
+                outError.ErrorMessage = "Ошибка сортировки меню";
+                return new List<MenuItem>();
+            }            
+            foreach (MenuItem menuItem in menuItems)
+            {
+                if (categories.Contains((int)menuItem.Product.ProductType))
+                    result.Add(menuItem);
+                else
+                    continue;
+            }
+            return result;
+        }
+
+        private List<int> ConverComingCategories(List<string> comingCategories)
+        {
+            List<int> categories = new List<int>();
+            foreach (string comingCategory in comingCategories)
+            {
+                categories.Add((int)CategoryConverter.RusStringToEnum(comingCategory));
+            }
+            return categories;
+        }
+        private MenuItem SetMuneItem(DbMenuItem dbMenuItem, Product product)
         {
             return new MenuItem(product, dbMenuItem.DbMenuItemPrice.ToString());
         }
