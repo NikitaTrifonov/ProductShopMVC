@@ -7,3 +7,9 @@
 ## Использовано
 c#, asp.Net MVC5, html, css, js, jQuery, postgreSql
 
+## Preview
+
+<img src = https://github.com/NikitaTrifonov/ProductShopMVC/blob/master/shopAll.png>
+<img src = https://github.com/NikitaTrifonov/ProductShopMVC/blob/master/editProduct.png >
+<img src = https://github.com/NikitaTrifonov/ProductShopMVC/blob/master/clients.png >
+<img src = https://github.com/NikitaTrifonov/ProductShopMVC/blob/master/dictinary.png >
