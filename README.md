@@ -1,2 +1,1 @@
-# ProductShopMVC
-Lern ASP.NET MVC
+# Lern ASP.NET MVC
